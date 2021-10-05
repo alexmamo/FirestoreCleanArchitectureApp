@@ -1,4 +1,4 @@
-package ro.alexmamo.firestorecleanarchitecture.presentation
+package ro.alexmamo.firestorecleanarchitecture.presentation.books
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
