@@ -11,13 +11,13 @@ import kotlinx.coroutines.launch
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
-import ro.alexmamo.firestorecleanarchitecture.domain.operations.Actions
+import ro.alexmamo.firestorecleanarchitecture.domain.use_case.UseCases
 import javax.inject.Inject
 
 @HiltViewModel
 @InternalCoroutinesApi
 class BooksViewModel @Inject constructor(
-    private val actions: Actions
+    private val useCases: UseCases
 ): ViewModel() {
     private val _booksState = mutableStateOf<Response<List<Book>>>(Response.Loading)
     val booksState: State<Response<List<Book>>> = _booksState
@@ -35,7 +35,7 @@ class BooksViewModel @Inject constructor(
 
     private fun getBooks() {
         viewModelScope.launch {
-            actions.getBooks().collect { response ->
+            useCases.getBooks().collect { response ->
                 _booksState.value = response
             }
         }
@@ -43,7 +43,7 @@ class BooksViewModel @Inject constructor(
 
     fun addBook(title: String, author: String) {
         viewModelScope.launch {
-            actions.addBook(title, author).collect { response ->
+            useCases.addBook(title, author).collect { response ->
                 _isBookAddedState.value = response
             }
         }
@@ -51,7 +51,7 @@ class BooksViewModel @Inject constructor(
 
     fun deleteBook(bookId: String) {
         viewModelScope.launch {
-            actions.deleteBook(bookId).collect { response ->
+            useCases.deleteBook(bookId).collect { response ->
                 _isBookDeletedState.value = response
             }
         }

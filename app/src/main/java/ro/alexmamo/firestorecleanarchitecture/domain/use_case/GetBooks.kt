@@ -1,4 +1,4 @@
-package ro.alexmamo.firestorecleanarchitecture.domain.operations
+package ro.alexmamo.firestorecleanarchitecture.domain.use_case
 
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
 
