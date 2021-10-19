@@ -9,8 +9,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ro.alexmamo.firestorecleanarchitecture.data.repository.BooksRepositoryImpl
-import ro.alexmamo.firestorecleanarchitecture.domain.operations.*
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
+import ro.alexmamo.firestorecleanarchitecture.domain.use_case.*
 import ro.alexmamo.firestorecleanarchitecture.utils.Constants.BOOKS
 import ro.alexmamo.firestorecleanarchitecture.utils.Constants.TITLE
 
@@ -34,7 +34,7 @@ object AppModule {
     ): BooksRepository = BooksRepositoryImpl(booksRef, booksQuery)
 
     @Provides
-    fun provideActions(repository: BooksRepository) = Actions(
+    fun provideActions(repository: BooksRepository) = UseCases(
         getBooks = GetBooks(repository),
         addBook = AddBook(repository),
         deleteBook = DeleteBook(repository)

@@ -19,7 +19,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.*
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.Alert
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BookCard
-import ro.alexmamo.firestorecleanarchitecture.utils.Constants
+import ro.alexmamo.firestorecleanarchitecture.utils.Constants.ADD_BOOK
 
 @Composable
 @InternalCoroutinesApi
@@ -37,7 +37,7 @@ fun BooksScreen(
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = Constants.ADD_BOOK
+                    contentDescription = ADD_BOOK
                 )
             }
         }
