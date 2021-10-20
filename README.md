@@ -1,6 +1,8 @@
 # FirestoreCleanArchitectureApp
 FirestoreCleanArchitectureApp is an app built with [Kotlin][1] and [Cloud Firestore][2] that displays data in real-time using [Android Architecture Components][3] and the MVVM Architecture Pattern. For the UI it uses Jetpack Compose, Android's modern toolkit for building native UI.
 
+![alt text](https://miro.medium.com/max/352/1*HaVOC4vTFXgqTdoGS5yLwQ.png)
+
 Below you can find the docs for each tehnology that is used in this app:
 
 ## Firebase Products:
