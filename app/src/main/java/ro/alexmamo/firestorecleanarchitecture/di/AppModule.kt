@@ -34,7 +34,7 @@ object AppModule {
     ): BooksRepository = BooksRepositoryImpl(booksRef, booksQuery)
 
     @Provides
-    fun provideActions(repository: BooksRepository) = UseCases(
+    fun provideUseCases(repository: BooksRepository) = UseCases(
         getBooks = GetBooks(repository),
         addBook = AddBook(repository),
         deleteBook = DeleteBook(repository)
