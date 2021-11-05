@@ -22,9 +22,15 @@ Below you can find the docs for each tehnology that is used in this app:
 ## Other Android Components:
 * [Jetpack Compose][9]
 
+---
+
 This repo represents the code for following article writen on the Medium publication:
 
 * [How to make a clean architecture Android app, using MVVM, Firestore, and Jetpack Compose?][10]
+
+See it also on youtube:
+
+* https://youtu.be/zvQ4vH2dC78
 
 If you download or clone this repo, in order to make it work, you should follow the instructions given in the official documentation regarding on [how to add Firebase to your project][11].
 
