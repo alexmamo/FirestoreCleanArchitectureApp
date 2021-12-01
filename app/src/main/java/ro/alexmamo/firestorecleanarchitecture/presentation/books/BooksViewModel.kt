@@ -15,7 +15,6 @@ import ro.alexmamo.firestorecleanarchitecture.domain.use_case.UseCases
 import javax.inject.Inject
 
 @HiltViewModel
-@InternalCoroutinesApi
 class BooksViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
