@@ -19,6 +19,7 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.*
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.Alert
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BookCard
+import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.ProgressBar
 import ro.alexmamo.firestorecleanarchitecture.utils.Constants.ADD_BOOK
 
 @Composable
@@ -46,12 +47,7 @@ fun BooksScreen(
             Alert()
         }
         when(val booksResponse = viewModel.booksState.value) {
-            is Loading -> Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                CircularProgressIndicator()
-            }
+            is Loading -> ProgressBar()
             is Success -> Box(
                 modifier = Modifier.fillMaxSize()
             ) {
