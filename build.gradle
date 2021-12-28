@@ -10,9 +10,9 @@ buildscript {
         live_data_version = "2.4.0"
         activity_compose_version = "1.4.0"
         material_version = "1.4.0"
-        compose_version = "1.1.0-beta04"
-        navigation_compose_version = "1.0.0-beta01"
-        firebase_bom_version = "29.0.2"
+        compose_version = "1.1.0-rc01"
+        navigation_compose_version = "1.0.0-rc01"
+        firebase_bom_version = "29.0.3"
     }
     repositories {
         google()
