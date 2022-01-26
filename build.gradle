@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        gradle_version = "7.0.4"
+        gradle_version = "7.1.0"
         kotlin_version = "1.6.10"
         coroutines_version = "1.4.1"
         google_services_version = "4.3.8"

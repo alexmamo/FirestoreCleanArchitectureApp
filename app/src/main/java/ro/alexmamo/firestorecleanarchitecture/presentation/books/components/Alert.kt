@@ -43,7 +43,11 @@ fun Alert(
                     TextField(
                         value = title,
                         onValueChange = { title = it },
-                        placeholder = { Text(BOOK_TITLE) },
+                        placeholder = {
+                            Text(
+                                text = BOOK_TITLE
+                            )
+                        },
                         modifier = Modifier.focusRequester(focusRequester)
                     )
                     DisposableEffect(Unit) {
@@ -56,7 +60,11 @@ fun Alert(
                     TextField(
                         value = author,
                         onValueChange = { author = it },
-                        placeholder = { Text(AUTHOR) }
+                        placeholder = {
+                            Text(
+                                text = AUTHOR
+                            )
+                        }
                     )
                 }
             },
