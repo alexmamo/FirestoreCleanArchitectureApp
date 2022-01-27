@@ -63,7 +63,7 @@ dependencies {
     //Compose
     implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
-    implementation "androidx.hilt:hilt-navigation-compose:$navigation_compose_version"
+    implementation "androidx.hilt:hilt-navigation-compose:$hilt_navigation_compose_version"
     //Firebase
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
     implementation "com.google.firebase:firebase-firestore-ktx"
