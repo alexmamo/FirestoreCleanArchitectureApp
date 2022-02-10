@@ -11,8 +11,8 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ro.alexmamo.firestorecleanarchitecture.data.repository.BooksRepositoryImpl
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
 import ro.alexmamo.firestorecleanarchitecture.domain.use_case.*
-import ro.alexmamo.firestorecleanarchitecture.utils.Constants.BOOKS
-import ro.alexmamo.firestorecleanarchitecture.utils.Constants.TITLE
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.BOOKS
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.TITLE
 
 @Module
 @ExperimentalCoroutinesApi

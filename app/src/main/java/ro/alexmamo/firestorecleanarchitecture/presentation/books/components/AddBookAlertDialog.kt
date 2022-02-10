@@ -14,16 +14,16 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD_BOOK
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.AUTHOR
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.BOOK_TITLE
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.DISMISS
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.BooksViewModel
-import ro.alexmamo.firestorecleanarchitecture.utils.Constants.ADD
-import ro.alexmamo.firestorecleanarchitecture.utils.Constants.ADD_BOOK
-import ro.alexmamo.firestorecleanarchitecture.utils.Constants.AUTHOR
-import ro.alexmamo.firestorecleanarchitecture.utils.Constants.BOOK_TITLE
-import ro.alexmamo.firestorecleanarchitecture.utils.Constants.DISMISS
 
 @Composable
 @InternalCoroutinesApi
-fun Alert(
+fun AddBookAlertDialog(
     viewModel: BooksViewModel = hiltViewModel()
 ) {
     var title by remember { mutableStateOf("") }
@@ -36,7 +36,9 @@ fun Alert(
                 viewModel.openDialogState.value = false
             },
             title = {
-                Text(text = ADD_BOOK)
+                Text(
+                    text = ADD_BOOK
+                )
             },
             text = {
                 Column {
@@ -75,7 +77,9 @@ fun Alert(
                         viewModel.addBook(title, author)
                     }
                 ) {
-                    Text(ADD)
+                    Text(
+                        text = ADD
+                    )
                 }
             },
             dismissButton = {
@@ -84,7 +88,9 @@ fun Alert(
                         viewModel.openDialogState.value = false
                     }
                 ) {
-                    Text(DISMISS)
+                    Text(
+                        text = DISMISS
+                    )
                 }
             }
         )

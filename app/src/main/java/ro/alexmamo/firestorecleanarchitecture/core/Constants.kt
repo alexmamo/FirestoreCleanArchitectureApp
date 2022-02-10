@@ -1,6 +1,9 @@
-package ro.alexmamo.firestorecleanarchitecture.utils
+package ro.alexmamo.firestorecleanarchitecture.core
 
 object Constants {
+    //App
+    const val TAG = "AppTag"
+
     //Firestore
     const val BOOKS = "books"
     const val TITLE = "title"
