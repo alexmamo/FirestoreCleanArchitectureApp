@@ -1,18 +1,18 @@
 buildscript {
     ext {
-        gradle_version = "7.1.0"
-        kotlin_version = "1.6.10"
-        coroutines_version = "1.4.1"
-        google_services_version = "4.3.8"
-        hilt_version = "2.40.4"
+        gradle_version = "7.1.3"
+        kotlin_version = "1.6.20"
+        coroutines_version = "1.6.0"
+        google_services_version = "4.3.10"
+        hilt_version = "2.40.5"
         core_version = "1.7.0"
         appcompat_version = "1.4.1"
-        live_data_version = "2.4.0"
+        live_data_version = "2.4.1"
         activity_compose_version = "1.4.0"
         material_version = "1.5.0"
-        compose_version = "1.2.0-alpha02"
+        compose_version = "1.2.0-alpha08"
         hilt_navigation_compose_version = "1.0.0"
-        firebase_bom_version = "29.0.4"
+        firebase_bom_version = "29.3.1"
     }
     repositories {
         google()
