@@ -30,7 +30,6 @@ fun BooksScreen(
             AddBookFloatingActionButton()
         }
     ) {
-        it.calculateTopPadding()
         if(viewModel.openDialogState.value) {
             AddBookAlertDialog()
         }
