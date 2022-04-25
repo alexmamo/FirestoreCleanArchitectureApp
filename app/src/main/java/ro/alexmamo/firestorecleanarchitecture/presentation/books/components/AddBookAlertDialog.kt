@@ -14,6 +14,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.job
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD_BOOK
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.AUTHOR
@@ -52,10 +53,12 @@ fun AddBookAlertDialog(
                         },
                         modifier = Modifier.focusRequester(focusRequester)
                     )
-                    DisposableEffect(Unit) {
-                        focusRequester.requestFocus()
-                        onDispose { }
+                    LaunchedEffect(Unit) {
+                        coroutineContext.job.invokeOnCompletion {
+                            focusRequester.requestFocus()
+                        }
                     }
+
                     Spacer(
                         modifier = Modifier.height(16.dp)
                     )

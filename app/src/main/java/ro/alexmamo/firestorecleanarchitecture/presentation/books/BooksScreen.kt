@@ -1,5 +1,6 @@
 package ro.alexmamo.firestorecleanarchitecture.presentation.books
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,6 +23,7 @@ import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.Prog
 @Composable
 @InternalCoroutinesApi
 @ExperimentalCoroutinesApi
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 fun BooksScreen(
     viewModel: BooksViewModel = hiltViewModel()
 ) {
