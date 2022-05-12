@@ -1,12 +1,11 @@
 package ro.alexmamo.firestorecleanarchitecture.data.repository
 
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.Query
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.TITLE
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.*
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
@@ -14,13 +13,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-@ExperimentalCoroutinesApi
 class BooksRepositoryImpl @Inject constructor(
-    private val booksRef: CollectionReference,
-    private val booksQuery: Query,
+    private val booksRef: CollectionReference
 ): BooksRepository {
     override fun getBooksFromFirestore() = callbackFlow {
-        val snapshotListener = booksQuery.addSnapshotListener { snapshot, e ->
+        val snapshotListener = booksRef.orderBy(TITLE).addSnapshotListener { snapshot, e ->
             val response = if (snapshot != null) {
                 val books = snapshot.toObjects(Book::class.java)
                 Success(books)
@@ -37,13 +34,13 @@ class BooksRepositoryImpl @Inject constructor(
     override suspend fun addBookToFirestore(title: String, author: String) = flow {
         try {
             emit(Loading)
-            val bookId = booksRef.document().id
+            val id = booksRef.document().id
             val book = Book(
-                id = bookId,
+                id = id,
                 title = title,
                 author = author
             )
-            val addition = booksRef.document(bookId).set(book).await()
+            val addition = booksRef.document(id).set(book).await()
             emit(Success(addition))
         } catch (e: Exception) {
             emit(Error(e.message ?: e.toString()))

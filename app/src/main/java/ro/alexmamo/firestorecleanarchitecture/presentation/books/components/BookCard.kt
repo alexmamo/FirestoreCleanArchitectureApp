@@ -15,15 +15,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.InternalCoroutinesApi
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.DELETE_BOOK
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.BooksViewModel
-import ro.alexmamo.firestorecleanarchitecture.core.Constants.DELETE_BOOK
 
 @Composable
-@InternalCoroutinesApi
-@ExperimentalCoroutinesApi
 fun BookCard(
     book: Book,
     viewModel: BooksViewModel = hiltViewModel()

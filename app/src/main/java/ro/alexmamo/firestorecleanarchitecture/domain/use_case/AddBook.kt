@@ -3,10 +3,10 @@ package ro.alexmamo.firestorecleanarchitecture.domain.use_case
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
 
 class AddBook(
-    private val repository: BooksRepository
+    private val repo: BooksRepository
 ) {
     suspend operator fun invoke(
         title: String,
         author: String
-    ) = repository.addBookToFirestore(title, author)
+    ) = repo.addBookToFirestore(title, author)
 }

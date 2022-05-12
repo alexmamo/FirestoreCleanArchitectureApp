@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
@@ -22,10 +21,11 @@ class BooksViewModel @Inject constructor(
 
     private val _isBookAddedState = mutableStateOf<Response<Void?>>(Success(null))
     val isBookAddedState: State<Response<Void?>> = _isBookAddedState
-    var openDialogState = mutableStateOf(false)
 
     private val _isBookDeletedState = mutableStateOf<Response<Void?>>(Success(null))
     val isBookDeletedState: State<Response<Void?>> = _isBookDeletedState
+
+    var openDialogState = mutableStateOf(false)
 
     init {
         getBooks()

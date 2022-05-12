@@ -13,7 +13,6 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.job
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD_BOOK
@@ -23,7 +22,6 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.DISMISS
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.BooksViewModel
 
 @Composable
-@InternalCoroutinesApi
 fun AddBookAlertDialog(
     viewModel: BooksViewModel = hiltViewModel()
 ) {
