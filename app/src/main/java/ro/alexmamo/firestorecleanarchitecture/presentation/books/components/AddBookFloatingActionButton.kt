@@ -6,17 +6,15 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD_BOOK
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.BooksViewModel
 
 @Composable
 fun AddBookFloatingActionButton(
-    viewModel: BooksViewModel = hiltViewModel()
+    openDialog: () -> Unit
 ) {
     FloatingActionButton(
         onClick = {
-            viewModel.openDialogState.value = true
+            openDialog()
         },
         backgroundColor = MaterialTheme.colors.primary
     ) {

@@ -14,15 +14,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.DELETE_BOOK
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.BooksViewModel
 
 @Composable
 fun BookCard(
     book: Book,
-    viewModel: BooksViewModel = hiltViewModel()
+    deleteBook: () -> Unit,
 ) {
     Card(
         shape = MaterialTheme.shapes.small,
@@ -64,9 +62,7 @@ fun BookCard(
             }
             IconButton(
                 onClick = {
-                    book.id?.let { bookId ->
-                        viewModel.deleteBook(bookId)
-                    }
+                    deleteBook()
                 }
             ) {
                 Icon(

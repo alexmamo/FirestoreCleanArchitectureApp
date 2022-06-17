@@ -22,13 +22,30 @@ import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.Prog
 fun BooksScreen(
     viewModel: BooksViewModel = hiltViewModel()
 ) {
+    val isDialogOpen = viewModel.openDialogState.value
+    fun openDialog() {
+        viewModel.openDialogState.value = true
+    }
+    fun closeDialog() {
+        viewModel.openDialogState.value = false
+    }
+
     Scaffold(
         floatingActionButton = {
-            AddBookFloatingActionButton()
+            AddBookFloatingActionButton {
+                openDialog()
+            }
         },
         content = { padding ->
-            if(viewModel.openDialogState.value) {
-                AddBookAlertDialog()
+            if(isDialogOpen) {
+                AddBookAlertDialog(
+                    closeDialog = {
+                        closeDialog()
+                    },
+                    addBook = { title, author ->
+                        viewModel.addBook(title, author)
+                    }
+                )
             }
             when(val booksResponse = viewModel.booksState.value) {
                 is Loading -> ProgressBar()
@@ -39,7 +56,12 @@ fun BooksScreen(
                         items = booksResponse.data
                     ) { book ->
                         BookCard(
-                            book = book
+                            book = book,
+                            deleteBook = {
+                                book.id?.let { bookId ->
+                                    viewModel.deleteBook(bookId)
+                                }
+                            }
                         )
                     }
                 }

@@ -12,88 +12,85 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import kotlinx.coroutines.job
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD_BOOK
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.AUTHOR
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.BOOK_TITLE
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.DISMISS
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.BooksViewModel
 
 @Composable
 fun AddBookAlertDialog(
-    viewModel: BooksViewModel = hiltViewModel()
+    closeDialog: () -> Unit,
+    addBook: (title: String, author: String) -> Unit
 ) {
     var title by remember { mutableStateOf("") }
     var author by remember { mutableStateOf("") }
     val focusRequester = FocusRequester()
 
-    if (viewModel.openDialogState.value) {
-        AlertDialog(
-            onDismissRequest = {
-                viewModel.openDialogState.value = false
-            },
-            title = {
-                Text(
-                    text = ADD_BOOK
+    AlertDialog(
+        onDismissRequest = {
+            closeDialog()
+        },
+        title = {
+            Text(
+                text = ADD_BOOK
+            )
+        },
+        text = {
+            Column {
+                TextField(
+                    value = title,
+                    onValueChange = { title = it },
+                    placeholder = {
+                        Text(
+                            text = BOOK_TITLE
+                        )
+                    },
+                    modifier = Modifier.focusRequester(focusRequester)
                 )
-            },
-            text = {
-                Column {
-                    TextField(
-                        value = title,
-                        onValueChange = { title = it },
-                        placeholder = {
-                            Text(
-                                text = BOOK_TITLE
-                            )
-                        },
-                        modifier = Modifier.focusRequester(focusRequester)
-                    )
-                    LaunchedEffect(Unit) {
-                        coroutineContext.job.invokeOnCompletion {
-                            focusRequester.requestFocus()
-                        }
+                LaunchedEffect(Unit) {
+                    coroutineContext.job.invokeOnCompletion {
+                        focusRequester.requestFocus()
                     }
+                }
 
-                    Spacer(
-                        modifier = Modifier.height(16.dp)
-                    )
-                    TextField(
-                        value = author,
-                        onValueChange = { author = it },
-                        placeholder = {
-                            Text(
-                                text = AUTHOR
-                            )
-                        }
-                    )
-                }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        viewModel.openDialogState.value = false
-                        viewModel.addBook(title, author)
+                Spacer(
+                    modifier = Modifier.height(16.dp)
+                )
+                TextField(
+                    value = author,
+                    onValueChange = { author = it },
+                    placeholder = {
+                        Text(
+                            text = AUTHOR
+                        )
                     }
-                ) {
-                    Text(
-                        text = ADD
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = {
-                        viewModel.openDialogState.value = false
-                    }
-                ) {
-                    Text(
-                        text = DISMISS
-                    )
-                }
+                )
             }
-        )
-    }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    closeDialog()
+                    addBook(title, author)
+                }
+            ) {
+                Text(
+                    text = ADD
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = {
+                    closeDialog()
+                }
+            ) {
+                Text(
+                    text = DISMISS
+                )
+            }
+        }
+    )
 }
