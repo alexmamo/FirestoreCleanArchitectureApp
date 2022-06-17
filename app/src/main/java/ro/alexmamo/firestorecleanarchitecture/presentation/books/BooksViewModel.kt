@@ -1,7 +1,9 @@
 package ro.alexmamo.firestorecleanarchitecture.presentation.books
 
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +27,7 @@ class BooksViewModel @Inject constructor(
     private val _isBookDeletedState = mutableStateOf<Response<Void?>>(Success(null))
     val isBookDeletedState: State<Response<Void?>> = _isBookDeletedState
 
-    var openDialogState = mutableStateOf(false)
+    var isDialogOpen by mutableStateOf(false)
 
     init {
         getBooks()

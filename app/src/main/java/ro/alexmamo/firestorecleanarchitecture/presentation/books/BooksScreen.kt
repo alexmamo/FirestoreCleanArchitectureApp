@@ -22,12 +22,12 @@ import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.Prog
 fun BooksScreen(
     viewModel: BooksViewModel = hiltViewModel()
 ) {
-    val isDialogOpen = viewModel.openDialogState.value
+    val isDialogOpen = viewModel.isDialogOpen
     fun openDialog() {
-        viewModel.openDialogState.value = true
+        viewModel.isDialogOpen = true
     }
     fun closeDialog() {
-        viewModel.openDialogState.value = false
+        viewModel.isDialogOpen = false
     }
 
     Scaffold(
