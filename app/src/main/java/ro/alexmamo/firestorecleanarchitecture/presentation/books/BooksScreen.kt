@@ -32,9 +32,11 @@ fun BooksScreen(
 
     Scaffold(
         floatingActionButton = {
-            AddBookFloatingActionButton {
-                openDialog()
-            }
+            AddBookFloatingActionButton (
+                openDialog = {
+                    openDialog()
+                }
+            )
         },
         content = { padding ->
             if(isDialogOpen) {

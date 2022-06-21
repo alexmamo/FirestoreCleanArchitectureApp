@@ -33,27 +33,21 @@ class BooksViewModel @Inject constructor(
         getBooks()
     }
 
-    private fun getBooks() {
-        viewModelScope.launch {
-            useCases.getBooks().collect { response ->
-                _booksState.value = response
-            }
+    private fun getBooks() = viewModelScope.launch {
+        useCases.getBooks().collect { response ->
+            _booksState.value = response
         }
     }
 
-    fun addBook(title: String, author: String) {
-        viewModelScope.launch {
-            useCases.addBook(title, author).collect { response ->
-                _isBookAddedState.value = response
-            }
+    fun addBook(title: String, author: String) = viewModelScope.launch {
+        useCases.addBook(title, author).collect { response ->
+            _isBookAddedState.value = response
         }
     }
 
-    fun deleteBook(bookId: String) {
-        viewModelScope.launch {
-            useCases.deleteBook(bookId).collect { response ->
-                _isBookDeletedState.value = response
-            }
+    fun deleteBook(bookId: String) = viewModelScope.launch {
+        useCases.deleteBook(bookId).collect { response ->
+            _isBookDeletedState.value = response
         }
     }
 }
