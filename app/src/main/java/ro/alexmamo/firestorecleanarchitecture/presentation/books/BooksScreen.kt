@@ -16,7 +16,7 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.*
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookAlertDialog
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookFloatingActionButton
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BookCard
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.ProgressBar
+import ro.alexmamo.firestorecleanarchitecture.components.ProgressBar
 
 @Composable
 fun BooksScreen(

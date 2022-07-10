@@ -1,4 +1,4 @@
-package ro.alexmamo.firestorecleanarchitecture.presentation.books.components
+package ro.alexmamo.firestorecleanarchitecture.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
