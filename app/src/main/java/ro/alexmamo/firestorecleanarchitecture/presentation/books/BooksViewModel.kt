@@ -18,7 +18,7 @@ import javax.inject.Inject
 class BooksViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
-    private val _booksState = mutableStateOf<Response<List<Book>>>(Response.Loading)
+    private val _booksState = mutableStateOf<Response<List<Book>>>(Success(emptyList()))
     val booksState: State<Response<List<Book>>> = _booksState
 
     private val _isBookAddedState = mutableStateOf<Response<Void?>>(Success(null))
