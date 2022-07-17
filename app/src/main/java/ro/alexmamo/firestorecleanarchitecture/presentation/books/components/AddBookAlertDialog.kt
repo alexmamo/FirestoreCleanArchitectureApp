@@ -18,20 +18,19 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD_BOOK
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.AUTHOR
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.BOOK_TITLE
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.DISMISS
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_STRING
 
 @Composable
 fun AddBookAlertDialog(
     closeDialog: () -> Unit,
     addBook: (title: String, author: String) -> Unit
 ) {
-    var title by remember { mutableStateOf("") }
-    var author by remember { mutableStateOf("") }
+    var title by remember { mutableStateOf(EMPTY_STRING) }
+    var author by remember { mutableStateOf(EMPTY_STRING) }
     val focusRequester = FocusRequester()
 
     AlertDialog(
-        onDismissRequest = {
-            closeDialog()
-        },
+        onDismissRequest = closeDialog,
         title = {
             Text(
                 text = ADD_BOOK
@@ -54,7 +53,6 @@ fun AddBookAlertDialog(
                         focusRequester.requestFocus()
                     }
                 }
-
                 Spacer(
                     modifier = Modifier.height(16.dp)
                 )
@@ -83,9 +81,7 @@ fun AddBookAlertDialog(
         },
         dismissButton = {
             TextButton(
-                onClick = {
-                    closeDialog()
-                }
+                onClick = closeDialog
             ) {
                 Text(
                     text = DISMISS

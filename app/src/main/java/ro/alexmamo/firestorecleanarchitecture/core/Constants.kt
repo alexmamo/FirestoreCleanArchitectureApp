@@ -19,4 +19,5 @@ object Constants {
     //Placeholders
     const val BOOK_TITLE = "Title"
     const val AUTHOR = "Author"
+    const val EMPTY_STRING = ""
 }

@@ -13,9 +13,7 @@ fun AddBookFloatingActionButton(
     openDialog: () -> Unit
 ) {
     FloatingActionButton(
-        onClick = {
-            openDialog()
-        },
+        onClick = openDialog,
         backgroundColor = MaterialTheme.colors.primary
     ) {
         Icon(
