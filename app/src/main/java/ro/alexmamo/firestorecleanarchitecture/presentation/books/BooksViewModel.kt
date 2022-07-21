@@ -27,7 +27,7 @@ class BooksViewModel @Inject constructor(
     private val _isBookDeletedState = mutableStateOf<Response<Void?>>(Success(null))
     val isBookDeletedState: State<Response<Void?>> = _isBookDeletedState
 
-    var isDialogOpen by mutableStateOf(false)
+    var openDialog by mutableStateOf(false)
 
     init {
         getBooks()
@@ -49,5 +49,13 @@ class BooksViewModel @Inject constructor(
         useCases.deleteBook(bookId).collect { response ->
             _isBookDeletedState.value = response
         }
+    }
+
+    fun openDialog() {
+        openDialog = true
+    }
+
+    fun closeDialog() {
+        openDialog = false
     }
 }

@@ -22,8 +22,8 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_STRING
 
 @Composable
 fun AddBookAlertDialog(
-    closeDialog: () -> Unit,
-    addBook: (title: String, author: String) -> Unit
+    addBook: (title: String, author: String) -> Unit,
+    closeDialog: () -> Unit
 ) {
     var title by remember { mutableStateOf(EMPTY_STRING) }
     var author by remember { mutableStateOf(EMPTY_STRING) }
