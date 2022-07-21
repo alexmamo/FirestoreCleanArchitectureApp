@@ -39,11 +39,11 @@ fun BooksScreen(
 
     if(viewModel.openDialog) {
         AddBookAlertDialog(
-            addBook = { title, author ->
-                viewModel.addBook(title, author)
-            },
             closeDialog = {
                 viewModel.closeDialog()
+            },
+            addBook = { title, author ->
+                viewModel.addBook(title, author)
             }
         )
     }
