@@ -37,16 +37,15 @@ fun BooksScreen(
         }
     )
 
-    if(viewModel.openDialog) {
-        AddBookAlertDialog(
-            closeDialog = {
-                viewModel.closeDialog()
-            },
-            addBook = { title, author ->
-                viewModel.addBook(title, author)
-            }
-        )
-    }
+    AddBookAlertDialog(
+        openDialog = viewModel.openDialog,
+        closeDialog = {
+            viewModel.closeDialog()
+        },
+        addBook = { title, author ->
+            viewModel.addBook(title, author)
+        }
+    )
 
     when(val additionResponse = viewModel.isBookAddedState.value) {
         is Loading -> ProgressBar()

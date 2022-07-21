@@ -22,71 +22,74 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_STRING
 
 @Composable
 fun AddBookAlertDialog(
+    openDialog: Boolean,
     closeDialog: () -> Unit,
     addBook: (title: String, author: String) -> Unit
 ) {
-    var title by remember { mutableStateOf(EMPTY_STRING) }
-    var author by remember { mutableStateOf(EMPTY_STRING) }
-    val focusRequester = FocusRequester()
+    if (openDialog) {
+        var title by remember { mutableStateOf(EMPTY_STRING) }
+        var author by remember { mutableStateOf(EMPTY_STRING) }
+        val focusRequester = FocusRequester()
 
-    AlertDialog(
-        onDismissRequest = closeDialog,
-        title = {
-            Text(
-                text = ADD_BOOK
-            )
-        },
-        text = {
-            Column {
-                TextField(
-                    value = title,
-                    onValueChange = { title = it },
-                    placeholder = {
-                        Text(
-                            text = BOOK_TITLE
-                        )
-                    },
-                    modifier = Modifier.focusRequester(focusRequester)
-                )
-                LaunchedEffect(Unit) {
-                    coroutineContext.job.invokeOnCompletion {
-                        focusRequester.requestFocus()
-                    }
-                }
-                Spacer(
-                    modifier = Modifier.height(16.dp)
-                )
-                TextField(
-                    value = author,
-                    onValueChange = { author = it },
-                    placeholder = {
-                        Text(
-                            text = AUTHOR
-                        )
-                    }
-                )
-            }
-        },
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    closeDialog()
-                    addBook(title, author)
-                }
-            ) {
+        AlertDialog(
+            onDismissRequest = closeDialog,
+            title = {
                 Text(
-                    text = ADD
+                    text = ADD_BOOK
                 )
+            },
+            text = {
+                Column {
+                    TextField(
+                        value = title,
+                        onValueChange = { title = it },
+                        placeholder = {
+                            Text(
+                                text = BOOK_TITLE
+                            )
+                        },
+                        modifier = Modifier.focusRequester(focusRequester)
+                    )
+                    LaunchedEffect(Unit) {
+                        coroutineContext.job.invokeOnCompletion {
+                            focusRequester.requestFocus()
+                        }
+                    }
+                    Spacer(
+                        modifier = Modifier.height(16.dp)
+                    )
+                    TextField(
+                        value = author,
+                        onValueChange = { author = it },
+                        placeholder = {
+                            Text(
+                                text = AUTHOR
+                            )
+                        }
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        closeDialog()
+                        addBook(title, author)
+                    }
+                ) {
+                    Text(
+                        text = ADD
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(
+                    onClick = closeDialog
+                ) {
+                    Text(
+                        text = DISMISS
+                    )
+                }
             }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = closeDialog
-            ) {
-                Text(
-                    text = DISMISS
-                )
-            }
-        }
-    )
+        )
+    }
 }
