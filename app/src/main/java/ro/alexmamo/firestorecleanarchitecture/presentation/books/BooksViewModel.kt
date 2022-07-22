@@ -18,11 +18,11 @@ import javax.inject.Inject
 class BooksViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
-    var booksState by mutableStateOf<Response<List<Book>>>(Loading)
+    var booksResponse by mutableStateOf<Response<List<Book>>>(Loading)
         private set
-    var isBookAddedState by mutableStateOf<Response<Void?>>(Success(null))
+    var additionResponse by mutableStateOf<Response<Void?>>(Success(null))
         private set
-    var isBookDeletedState by mutableStateOf<Response<Void?>>(Success(null))
+    var deletionResponse by mutableStateOf<Response<Void?>>(Success(null))
         private set
     var openDialog by mutableStateOf(false)
 
@@ -32,19 +32,19 @@ class BooksViewModel @Inject constructor(
 
     private fun getBooks() = viewModelScope.launch {
         useCases.getBooks().collect { response ->
-            booksState = response
+            booksResponse = response
         }
     }
 
     fun addBook(title: String, author: String) = viewModelScope.launch {
         useCases.addBook(title, author).collect { response ->
-            isBookAddedState = response
+            additionResponse = response
         }
     }
 
     fun deleteBook(bookId: String) = viewModelScope.launch {
         useCases.deleteBook(bookId).collect { response ->
-            isBookDeletedState = response
+            deletionResponse = response
         }
     }
 
