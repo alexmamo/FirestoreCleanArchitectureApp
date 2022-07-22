@@ -10,7 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
+import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.*
 import ro.alexmamo.firestorecleanarchitecture.domain.use_case.UseCases
 import javax.inject.Inject
 
@@ -18,7 +18,7 @@ import javax.inject.Inject
 class BooksViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
-    private val _booksState = mutableStateOf<Response<List<Book>>>(Success(emptyList()))
+    private val _booksState = mutableStateOf<Response<List<Book>>>(Loading)
     val booksState: State<Response<List<Book>>> = _booksState
 
     private val _isBookAddedState = mutableStateOf<Response<Void?>>(Success(null))
