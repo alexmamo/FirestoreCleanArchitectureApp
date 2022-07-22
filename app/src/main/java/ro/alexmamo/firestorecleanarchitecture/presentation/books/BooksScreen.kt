@@ -23,16 +23,16 @@ fun BooksScreen(
             )
         },
         content = { padding ->
-            when(val booksResponse = viewModel.booksState.value) {
+            when(val booksState = viewModel.booksState) {
                 is Loading -> ProgressBar()
                 is Success -> BooksContent(
                     padding = padding,
-                    products = booksResponse.data,
+                    products = booksState.data,
                     deleteBook = { bookId ->
                         viewModel.deleteBook(bookId)
                     }
                 )
-                is Error -> printMessage(booksResponse.message)
+                is Error -> printMessage(booksState.message)
             }
         }
     )
@@ -47,15 +47,15 @@ fun BooksScreen(
         }
     )
 
-    when(val additionResponse = viewModel.isBookAddedState.value) {
+    when(val additionState = viewModel.isBookAddedState) {
         is Loading -> ProgressBar()
         is Success -> Unit
-        is Error -> printMessage(additionResponse.message)
+        is Error -> printMessage(additionState.message)
     }
 
-    when(val deletionResponse = viewModel.isBookDeletedState.value) {
+    when(val deletionState = viewModel.isBookDeletedState) {
         is Loading -> ProgressBar()
         is Success -> Unit
-        is Error -> printMessage(deletionResponse.message)
+        is Error -> printMessage(deletionState.message)
     }
 }
