@@ -25,37 +25,38 @@ fun BooksScreen(
         content = { padding ->
             when(val booksResponse = viewModel.booksResponse) {
                 is Loading -> ProgressBar()
-                is Success -> BooksContent(
-                    padding = padding,
-                    products = booksResponse.data,
-                    deleteBook = { bookId ->
-                        viewModel.deleteBook(bookId)
-                    }
-                )
+                is Success -> {
+                    BooksContent(
+                        padding = padding,
+                        products = booksResponse.data,
+                        deleteBook = { bookId ->
+                            viewModel.deleteBook(bookId)
+                        }
+                    )
+                    AddBookAlertDialog(
+                        openDialog = viewModel.openDialog,
+                        closeDialog = {
+                            viewModel.closeDialog()
+                        },
+                        addBook = { title, author ->
+                            viewModel.addBook(title, author)
+                        }
+                    )
+                }
                 is Error -> printMessage(booksResponse.message)
             }
         }
     )
 
-    AddBookAlertDialog(
-        openDialog = viewModel.openDialog,
-        closeDialog = {
-            viewModel.closeDialog()
-        },
-        addBook = { title, author ->
-            viewModel.addBook(title, author)
-        }
-    )
-
-    when(val additionResponse = viewModel.additionResponse) {
+    when(val addBookResponse = viewModel.addBookResponse) {
         is Loading -> ProgressBar()
         is Success -> Unit
-        is Error -> printMessage(additionResponse.message)
+        is Error -> printMessage(addBookResponse.message)
     }
 
-    when(val deletionResponse = viewModel.deletionResponse) {
+    when(val deleteBookResponse = viewModel.deleteBookResponse) {
         is Loading -> ProgressBar()
         is Success -> Unit
-        is Error -> printMessage(deletionResponse.message)
+        is Error -> printMessage(deleteBookResponse.message)
     }
 }

@@ -20,9 +20,9 @@ class BooksViewModel @Inject constructor(
 ): ViewModel() {
     var booksResponse by mutableStateOf<Response<List<Book>>>(Loading)
         private set
-    var additionResponse by mutableStateOf<Response<Void?>>(Success(null))
+    var addBookResponse by mutableStateOf<Response<Void?>>(Success(null))
         private set
-    var deletionResponse by mutableStateOf<Response<Void?>>(Success(null))
+    var deleteBookResponse by mutableStateOf<Response<Void?>>(Success(null))
         private set
     var openDialog by mutableStateOf(false)
 
@@ -38,13 +38,13 @@ class BooksViewModel @Inject constructor(
 
     fun addBook(title: String, author: String) = viewModelScope.launch {
         useCases.addBook(title, author).collect { response ->
-            additionResponse = response
+            addBookResponse = response
         }
     }
 
     fun deleteBook(bookId: String) = viewModelScope.launch {
         useCases.deleteBook(bookId).collect { response ->
-            deletionResponse = response
+            deleteBookResponse = response
         }
     }
 
