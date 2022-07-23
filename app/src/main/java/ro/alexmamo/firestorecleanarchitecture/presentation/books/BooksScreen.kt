@@ -15,20 +15,13 @@ fun BooksScreen(
     viewModel: BooksViewModel = hiltViewModel()
 ) {
     Scaffold(
-        floatingActionButton = {
-            AddBookFloatingActionButton(
-                openDialog = {
-                    viewModel.openDialog()
-                }
-            )
-        },
         content = { padding ->
             when(val booksResponse = viewModel.booksResponse) {
                 is Loading -> ProgressBar()
                 is Success -> {
                     BooksContent(
                         padding = padding,
-                        products = booksResponse.data,
+                        books = booksResponse.data,
                         deleteBook = { bookId ->
                             viewModel.deleteBook(bookId)
                         }
@@ -45,6 +38,13 @@ fun BooksScreen(
                 }
                 is Error -> printMessage(booksResponse.message)
             }
+        },
+        floatingActionButton = {
+            AddBookFloatingActionButton(
+                openDialog = {
+                    viewModel.openDialog()
+                }
+            )
         }
     )
 

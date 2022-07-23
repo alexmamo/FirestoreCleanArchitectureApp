@@ -17,7 +17,7 @@ object Constants {
     const val DISMISS = "Dismiss"
 
     //Placeholders
-    const val BOOK_TITLE = "Title"
-    const val AUTHOR = "Author"
+    const val BOOK_TITLE = "Type a book title..."
+    const val AUTHOR = "Type the author name..."
     const val EMPTY_STRING = ""
 }
