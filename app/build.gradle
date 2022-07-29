@@ -36,7 +36,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion compose_compiler_version
+        kotlinCompilerExtensionVersion compose_version
     }
     packagingOptions {
         resources {
@@ -47,18 +47,15 @@ android {
 }
 
 dependencies {
-    //Hilt
-    implementation "com.google.dagger:hilt-android:$hilt_version"
-    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
-    //AndroidX
-    implementation "androidx.core:core-ktx:$core_version"
-    //Material
-    implementation "com.google.android.material:material:$material_version"
+    //ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_version"
     //Compose
-    implementation "androidx.compose.ui:ui:$compose_version"
     implementation "androidx.compose.material:material:$compose_version"
     //Navigation
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_navigation_compose_version"
+    //Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
     //Firebase
     implementation platform("com.google.firebase:firebase-bom:$firebase_bom_version")
     implementation "com.google.firebase:firebase-firestore-ktx"

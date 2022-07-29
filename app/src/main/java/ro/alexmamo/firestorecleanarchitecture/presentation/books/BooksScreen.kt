@@ -9,12 +9,16 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.*
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookAlertDialog
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookFloatingActionButton
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BooksContent
+import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BooksTopBar
 
 @Composable
 fun BooksScreen(
     viewModel: BooksViewModel = hiltViewModel()
 ) {
     Scaffold(
+        topBar = {
+            BooksTopBar()
+        },
         content = { padding ->
             when(val booksResponse = viewModel.booksResponse) {
                 is Loading -> ProgressBar()
