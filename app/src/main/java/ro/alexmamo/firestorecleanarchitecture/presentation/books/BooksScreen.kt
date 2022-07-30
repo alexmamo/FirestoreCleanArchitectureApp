@@ -9,7 +9,7 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.*
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookAlertDialog
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookFloatingActionButton
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BooksContent
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BooksTopBar
+import ro.alexmamo.firestorecleanarchitecture.components.TopBar
 
 @Composable
 fun BooksScreen(
@@ -17,7 +17,7 @@ fun BooksScreen(
 ) {
     Scaffold(
         topBar = {
-            BooksTopBar()
+            TopBar()
         },
         content = { padding ->
             when(val booksResponse = viewModel.booksResponse) {

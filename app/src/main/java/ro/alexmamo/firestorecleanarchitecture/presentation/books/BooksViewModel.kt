@@ -25,6 +25,7 @@ class BooksViewModel @Inject constructor(
     var deleteBookResponse by mutableStateOf<Response<Void?>>(Success(null))
         private set
     var openDialog by mutableStateOf(false)
+        private set
 
     init {
         getBooks()

@@ -1,4 +1,4 @@
-package ro.alexmamo.firestorecleanarchitecture.presentation.books.components
+package ro.alexmamo.firestorecleanarchitecture.components
 
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -7,7 +7,7 @@ import androidx.compose.ui.res.stringResource
 import ro.alexmamo.firestorecleanarchitecture.R
 
 @Composable
-fun BooksTopBar() {
+fun TopBar() {
     TopAppBar(
         title = {
             Text(
