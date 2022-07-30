@@ -51,7 +51,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$viewmodel_version"
     //Compose
     implementation "androidx.compose.material:material:$compose_version"
-    //Navigation
+    //Navigation Compose
     implementation "androidx.hilt:hilt-navigation-compose:$hilt_navigation_compose_version"
     //Hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
