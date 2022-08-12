@@ -31,7 +31,7 @@ class BooksRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addBookToFirestore(title: String, author: String) = flow {
+    override fun addBookToFirestore(title: String, author: String) = flow {
         try {
             emit(Loading)
             val id = booksRef.document().id
@@ -47,7 +47,7 @@ class BooksRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deleteBookFromFirestore(bookId: String) = flow {
+    override fun deleteBookFromFirestore(bookId: String) = flow {
         try {
             emit(Loading)
             val deletion = booksRef.document(bookId).delete().await()
