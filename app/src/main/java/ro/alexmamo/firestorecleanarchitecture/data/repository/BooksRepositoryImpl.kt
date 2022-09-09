@@ -22,7 +22,7 @@ class BooksRepositoryImpl @Inject constructor(
                 val books = snapshot.toObjects(Book::class.java)
                 Success(books)
             } else {
-                Error(e?.message ?: e.toString())
+                Failure(e)
             }
             trySend(response).isSuccess
         }
@@ -43,7 +43,7 @@ class BooksRepositoryImpl @Inject constructor(
             val addition = booksRef.document(id).set(book).await()
             emit(Success(addition))
         } catch (e: Exception) {
-            emit(Error(e.message ?: e.toString()))
+            emit(Failure(e))
         }
     }
 
@@ -53,7 +53,7 @@ class BooksRepositoryImpl @Inject constructor(
             val deletion = booksRef.document(bookId).delete().await()
             emit(Success(deletion))
         } catch (e: Exception) {
-            emit(Error(e.message ?: e.toString()))
+            emit(Failure(e))
         }
     }
 }

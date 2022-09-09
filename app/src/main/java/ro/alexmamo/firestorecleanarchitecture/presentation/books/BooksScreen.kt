@@ -3,13 +3,8 @@ package ro.alexmamo.firestorecleanarchitecture.presentation.books
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
-import ro.alexmamo.firestorecleanarchitecture.components.ProgressBar
-import ro.alexmamo.firestorecleanarchitecture.core.Utils.Companion.printMessage
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.*
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookAlertDialog
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookFloatingActionButton
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BooksContent
 import ro.alexmamo.firestorecleanarchitecture.components.TopBar
+import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.*
 
 @Composable
 fun BooksScreen(
@@ -20,12 +15,11 @@ fun BooksScreen(
             TopBar()
         },
         content = { padding ->
-            when(val booksResponse = viewModel.booksResponse) {
-                is Loading -> ProgressBar()
-                is Success -> {
+            Books(
+                booksContent = { books ->
                     BooksContent(
                         padding = padding,
-                        books = booksResponse.data,
+                        books = books,
                         deleteBook = { bookId ->
                             viewModel.deleteBook(bookId)
                         }
@@ -40,8 +34,7 @@ fun BooksScreen(
                         }
                     )
                 }
-                is Error -> printMessage(booksResponse.message)
-            }
+            )
         },
         floatingActionButton = {
             AddBookFloatingActionButton(
@@ -51,16 +44,6 @@ fun BooksScreen(
             )
         }
     )
-
-    when(val addBookResponse = viewModel.addBookResponse) {
-        is Loading -> ProgressBar()
-        is Success -> Unit
-        is Error -> printMessage(addBookResponse.message)
-    }
-
-    when(val deleteBookResponse = viewModel.deleteBookResponse) {
-        is Loading -> ProgressBar()
-        is Success -> Unit
-        is Error -> printMessage(deleteBookResponse.message)
-    }
+    AddBook()
+    DeleteBook()
 }
