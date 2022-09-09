@@ -9,8 +9,8 @@ object Constants {
     const val TITLE = "title"
 
     //Actions
-    const val ADD_BOOK = "Add a book."
-    const val DELETE_BOOK = "Delete a book."
+    const val ADD_BOOK = "Add a book"
+    const val DELETE_BOOK = "Delete a book"
 
     //Buttons
     const val ADD = "Add"
