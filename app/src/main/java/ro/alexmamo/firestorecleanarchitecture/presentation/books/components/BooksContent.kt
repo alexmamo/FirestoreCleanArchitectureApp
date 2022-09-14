@@ -7,12 +7,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.Books
 
 @Composable
 fun BooksContent(
     padding: PaddingValues,
-    books: List<Book>,
+    books: Books,
     deleteBook: (bookId: String) -> Unit
 ) {
     LazyColumn(
