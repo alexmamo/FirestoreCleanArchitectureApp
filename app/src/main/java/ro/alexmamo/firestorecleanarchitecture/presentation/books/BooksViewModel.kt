@@ -7,10 +7,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.AddBookResponse
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksResponse
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.DeleteBookResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.use_case.UseCases
 import javax.inject.Inject
 
@@ -18,11 +19,11 @@ import javax.inject.Inject
 class BooksViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
-    var booksResponse by mutableStateOf<Response<List<Book>>>(Loading)
+    var booksResponse by mutableStateOf<BooksResponse>(Loading)
         private set
-    var addBookResponse by mutableStateOf<Response<Void?>>(Success(null))
+    var addBookResponse by mutableStateOf<AddBookResponse>(Success(false))
         private set
-    var deleteBookResponse by mutableStateOf<Response<Void?>>(Success(null))
+    var deleteBookResponse by mutableStateOf<DeleteBookResponse>(Success(false))
         private set
     var openDialog by mutableStateOf(false)
         private set

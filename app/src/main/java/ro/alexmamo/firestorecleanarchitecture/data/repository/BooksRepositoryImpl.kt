@@ -18,13 +18,13 @@ class BooksRepositoryImpl @Inject constructor(
 ): BooksRepository {
     override fun getBooksFromFirestore() = callbackFlow {
         val snapshotListener = booksRef.orderBy(TITLE).addSnapshotListener { snapshot, e ->
-            val response = if (snapshot != null) {
+            val booksResponse = if (snapshot != null) {
                 val books = snapshot.toObjects(Book::class.java)
                 Success(books)
             } else {
                 Failure(e)
             }
-            trySend(response).isSuccess
+            trySend(booksResponse).isSuccess
         }
         awaitClose {
             snapshotListener.remove()
@@ -40,8 +40,8 @@ class BooksRepositoryImpl @Inject constructor(
                 title = title,
                 author = author
             )
-            val addition = booksRef.document(id).set(book).await()
-            emit(Success(addition))
+            booksRef.document(id).set(book).await()
+            emit(Success(true))
         } catch (e: Exception) {
             emit(Failure(e))
         }
@@ -50,8 +50,8 @@ class BooksRepositoryImpl @Inject constructor(
     override fun deleteBookFromFirestore(bookId: String) = flow {
         try {
             emit(Loading)
-            val deletion = booksRef.document(bookId).delete().await()
-            emit(Success(deletion))
+            booksRef.document(bookId).delete().await()
+            emit(Success(true))
         } catch (e: Exception) {
             emit(Failure(e))
         }
