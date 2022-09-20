@@ -39,15 +39,13 @@ class BooksViewModel @Inject constructor(
     }
 
     fun addBook(title: String, author: String) = viewModelScope.launch {
-        useCases.addBook(title, author).collect { response ->
-            addBookResponse = response
-        }
+        addBookResponse = Loading
+        addBookResponse = useCases.addBook(title, author)
     }
 
     fun deleteBook(bookId: String) = viewModelScope.launch {
-        useCases.deleteBook(bookId).collect { response ->
-            deleteBookResponse = response
-        }
+        deleteBookResponse = Loading
+        deleteBookResponse = useCases.deleteBook(bookId)
     }
 
     fun openDialog() {

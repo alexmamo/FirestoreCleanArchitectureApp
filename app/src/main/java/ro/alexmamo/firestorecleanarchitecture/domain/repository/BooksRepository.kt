@@ -12,7 +12,7 @@ typealias DeleteBookResponse = Response<Boolean>
 interface BooksRepository {
     fun getBooksFromFirestore(): Flow<BooksResponse>
 
-    fun addBookToFirestore(title: String, author: String): Flow<AddBookResponse>
+    suspend fun addBookToFirestore(title: String, author: String): AddBookResponse
 
-    fun deleteBookFromFirestore(bookId: String): Flow<DeleteBookResponse>
+    suspend fun deleteBookFromFirestore(bookId: String): DeleteBookResponse
 }
