@@ -26,7 +26,7 @@ class BooksRepositoryImpl @Inject constructor(
             } else {
                 Failure(e)
             }
-            trySend(booksResponse).isSuccess
+            trySend(booksResponse)
         }
         awaitClose {
             snapshotListener.remove()
