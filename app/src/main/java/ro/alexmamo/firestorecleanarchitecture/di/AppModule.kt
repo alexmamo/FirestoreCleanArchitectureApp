@@ -1,7 +1,6 @@
 package ro.alexmamo.firestorecleanarchitecture.di
 
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Module
@@ -20,12 +19,7 @@ import ro.alexmamo.firestorecleanarchitecture.domain.use_case.UseCases
 @InstallIn(SingletonComponent::class)
 object AppModule {
     @Provides
-    fun provideFirebaseFirestore() = Firebase.firestore
-
-    @Provides
-    fun provideBooksRef(
-        db: FirebaseFirestore
-    ) = db.collection(BOOKS)
+    fun provideBooksRef() = Firebase.firestore.collection(BOOKS)
 
     @Provides
     fun provideBooksRepository(
