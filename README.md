@@ -9,7 +9,6 @@ Below you can find the docs for each tehnology that is used in this app:
 * [Cloud Firestore][2]
 
 ## Android Architecture Components:
-* [LiveData][4]
 * [ViewModel][5]
 
 ## Dependency Injection:
@@ -59,7 +58,6 @@ The code in this project is licensed under the Apache License 2.0.
 [1]: https://kotlinlang.org/
 [2]: https://firebase.google.com/docs/firestore
 [3]: https://developer.android.com/topic/libraries/architecture
-[4]: https://developer.android.com/topic/libraries/architecture/livedata
 [5]: https://developer.android.com/topic/libraries/architecture/viewmodel
 [6]: https://developer.android.com/training/dependency-injection/hilt-android
 [7]: https://kotlinlang.org/docs/coroutines-overview.html
