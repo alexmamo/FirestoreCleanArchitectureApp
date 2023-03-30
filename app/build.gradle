@@ -7,6 +7,7 @@ plugins {
 }
 
 android {
+    namespace 'ro.alexmamo.firestorecleanarchitecture'
     compileSdk 33
 
     defaultConfig {
@@ -38,7 +39,6 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion compose_version
     }
-    namespace 'ro.alexmamo.firestorecleanarchitecture'
 }
 
 dependencies {
