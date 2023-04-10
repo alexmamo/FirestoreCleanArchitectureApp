@@ -25,8 +25,6 @@ class BooksViewModel @Inject constructor(
         private set
     var deleteBookResponse by mutableStateOf<DeleteBookResponse>(Success(false))
         private set
-    var openDialog by mutableStateOf(false)
-        private set
 
     init {
         getBooks()
@@ -46,13 +44,5 @@ class BooksViewModel @Inject constructor(
     fun deleteBook(bookId: String) = viewModelScope.launch {
         deleteBookResponse = Loading
         deleteBookResponse = useCases.deleteBook(bookId)
-    }
-
-    fun openDialog() {
-        openDialog = true
-    }
-
-    fun closeDialog() {
-        openDialog = false
     }
 }

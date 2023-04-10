@@ -22,74 +22,71 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.NO_VALUE
 
 @Composable
 fun AddBookAlertDialog(
-    openDialog: Boolean,
     closeDialog: () -> Unit,
     addBook: (title: String, author: String) -> Unit
 ) {
-    if (openDialog) {
-        var title by remember { mutableStateOf(NO_VALUE) }
-        var author by remember { mutableStateOf(NO_VALUE) }
-        val focusRequester = FocusRequester()
+    var title by remember { mutableStateOf(NO_VALUE) }
+    var author by remember { mutableStateOf(NO_VALUE) }
+    val focusRequester = FocusRequester()
 
-        AlertDialog(
-            onDismissRequest = closeDialog,
-            title = {
-                Text(
-                    text = ADD_BOOK
+    AlertDialog(
+        onDismissRequest = closeDialog,
+        title = {
+            Text(
+                text = ADD_BOOK
+            )
+        },
+        text = {
+            Column {
+                TextField(
+                    value = title,
+                    onValueChange = { title = it },
+                    placeholder = {
+                        Text(
+                            text = BOOK_TITLE
+                        )
+                    },
+                    modifier = Modifier.focusRequester(focusRequester)
                 )
-            },
-            text = {
-                Column {
-                    TextField(
-                        value = title,
-                        onValueChange = { title = it },
-                        placeholder = {
-                            Text(
-                                text = BOOK_TITLE
-                            )
-                        },
-                        modifier = Modifier.focusRequester(focusRequester)
-                    )
-                    LaunchedEffect(Unit) {
-                        coroutineContext.job.invokeOnCompletion {
-                            focusRequester.requestFocus()
-                        }
+                LaunchedEffect(Unit) {
+                    coroutineContext.job.invokeOnCompletion {
+                        focusRequester.requestFocus()
                     }
-                    Spacer(
-                        modifier = Modifier.height(16.dp)
-                    )
-                    TextField(
-                        value = author,
-                        onValueChange = { author = it },
-                        placeholder = {
-                            Text(
-                                text = AUTHOR
-                            )
-                        }
-                    )
                 }
-            },
-            confirmButton = {
-                TextButton(
-                    onClick = {
-                        closeDialog()
-                        addBook(title, author)
+                Spacer(
+                    modifier = Modifier.height(16.dp)
+                )
+                TextField(
+                    value = author,
+                    onValueChange = { author = it },
+                    placeholder = {
+                        Text(
+                            text = AUTHOR
+                        )
                     }
-                ) {
-                    Text(
-                        text = ADD
-                    )
-                }
-            },
-            dismissButton = {
-                TextButton(
-                    onClick = closeDialog
-                ) {
-                    Text(
-                        text = DISMISS
-                    )
-                }
+                )
             }
-        )
-    }
+        },
+        confirmButton = {
+            TextButton(
+                onClick = {
+                    closeDialog()
+                    addBook(title, author)
+                }
+            ) {
+                Text(
+                    text = ADD
+                )
+            }
+        },
+        dismissButton = {
+            TextButton(
+                onClick = closeDialog
+            ) {
+                Text(
+                    text = DISMISS
+                )
+            }
+        }
+    )
 }
