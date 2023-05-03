@@ -33,27 +33,23 @@ class BooksRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addBookToFirestore(title: String, author: String): AddBookResponse {
-        return try {
-            val id = booksRef.document().id
-            val book = Book(
-                id = id,
-                title = title,
-                author = author
-            )
-            booksRef.document(id).set(book).await()
-            Success(true)
-        } catch (e: Exception) {
-            Failure(e)
-        }
+    override suspend fun addBookToFirestore(title: String, author: String): AddBookResponse = try {
+        val id = booksRef.document().id
+        val book = Book(
+            id = id,
+            title = title,
+            author = author
+        )
+        booksRef.document(id).set(book).await()
+        Success(true)
+    } catch (e: Exception) {
+        Failure(e)
     }
 
-    override suspend fun deleteBookFromFirestore(bookId: String): DeleteBookResponse {
-        return try {
-            booksRef.document(bookId).delete().await()
-            Success(true)
-        } catch (e: Exception) {
-            Failure(e)
-        }
+    override suspend fun deleteBookFromFirestore(bookId: String): DeleteBookResponse = try {
+        booksRef.document(bookId).delete().await()
+        Success(true)
+    } catch (e: Exception) {
+        Failure(e)
     }
 }
