@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import ro.alexmamo.firestorecleanarchitecture.core.Constants.NO_VALUE
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 
 @Composable
@@ -33,10 +32,10 @@ fun BookCard(
         ) {
             Column {
                 TextTitle(
-                    bookTitle = book.title ?: NO_VALUE
+                    bookTitle = book.title.orEmpty()
                 )
                 TextAuthor(
-                    bookAuthor = book.author ?: NO_VALUE
+                    bookAuthor = book.author.orEmpty()
                 )
             }
             Spacer(
