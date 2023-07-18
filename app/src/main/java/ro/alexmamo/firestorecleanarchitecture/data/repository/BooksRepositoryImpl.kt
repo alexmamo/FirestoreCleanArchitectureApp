@@ -8,9 +8,7 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.TITLE
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Failure
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
-import ro.alexmamo.firestorecleanarchitecture.domain.repository.AddBookResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
-import ro.alexmamo.firestorecleanarchitecture.domain.repository.DeleteBookResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -33,7 +31,7 @@ class BooksRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addBookToFirestore(title: String, author: String): AddBookResponse = try {
+    override suspend fun addBookToFirestore(title: String, author: String) = try {
         val id = booksRef.document().id
         val book = Book(
             id = id,
@@ -46,7 +44,7 @@ class BooksRepositoryImpl @Inject constructor(
         Failure(e)
     }
 
-    override suspend fun deleteBookFromFirestore(bookId: String): DeleteBookResponse = try {
+    override suspend fun deleteBookFromFirestore(bookId: String) = try {
         booksRef.document(bookId).delete().await()
         Success(true)
     } catch (e: Exception) {
