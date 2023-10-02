@@ -1,13 +1,13 @@
 buildscript {
     ext {
-        gradle_version = '8.1.0'
+        gradle_version = '8.1.1'
         kotlin_version = '1.9.0'
         google_services_version = '4.3.15'
-        compose_bom_version = '2023.08.00'
-        compose_version = '1.5.1'
-        hilt_version = '2.47'
+        compose_bom_version = '2023.09.02'
+        compose_version = '1.5.2'
+        hilt_version = '2.48'
         hilt_navigation_compose_version = '1.0.0'
-        firebase_bom_version = '32.2.1'
+        firebase_bom_version = '32.3.1'
     }
 }
 
