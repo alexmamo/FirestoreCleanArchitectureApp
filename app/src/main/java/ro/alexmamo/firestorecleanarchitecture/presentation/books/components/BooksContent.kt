@@ -13,7 +13,8 @@ import ro.alexmamo.firestorecleanarchitecture.domain.repository.Books
 fun BooksContent(
     padding: PaddingValues,
     books: Books,
-    deleteBook: (bookId: String) -> Unit
+    editBook: (id: String) -> Unit,
+    deleteBook: (id: String) -> Unit
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize().padding(padding)
@@ -23,9 +24,14 @@ fun BooksContent(
         ) { book ->
             BookCard(
                 book = book,
+                editBook = {
+                    book.id?.let { id ->
+                        editBook(id)
+                    }
+                },
                 deleteBook = {
-                    book.id?.let { bookId ->
-                        deleteBook(bookId)
+                    book.id?.let { id ->
+                        deleteBook(id)
                     }
                 }
             )

@@ -7,12 +7,18 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 typealias Books = List<Book>
 typealias BooksResponse = Response<Books>
 typealias AddBookResponse = Response<Boolean>
+typealias GetBookResponse = Response<Book>
+typealias EditBookResponse = Response<Boolean>
 typealias DeleteBookResponse = Response<Boolean>
 
 interface BooksRepository {
-    fun getBooksFromFirestore(): Flow<BooksResponse>
+    fun getBooks(): Flow<BooksResponse>
 
-    suspend fun addBookToFirestore(title: String, author: String): AddBookResponse
+    suspend fun addBook(book: MutableMap<String, Any>): AddBookResponse
 
-    suspend fun deleteBookFromFirestore(bookId: String): DeleteBookResponse
+    suspend fun getBookById(bookId: String): GetBookResponse
+
+    suspend fun editBook(bookId: String, book: MutableMap<String, Any>): EditBookResponse
+
+    suspend fun deleteBookById(bookId: String): DeleteBookResponse
 }

@@ -7,19 +7,15 @@ import ro.alexmamo.firestorecleanarchitecture.core.Utils.Companion.printError
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Failure
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
-import ro.alexmamo.firestorecleanarchitecture.domain.repository.Books
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.BooksViewModel
 
 @Composable
-fun Books(
-    viewModel: BooksViewModel = hiltViewModel(),
-    booksContent: @Composable (books: Books) -> Unit
+fun EditBook(
+    viewModel: BooksViewModel = hiltViewModel()
 ) {
-    when(val booksResponse = viewModel.booksResponse) {
+    when(val editBookResponse = viewModel.editBookResponse) {
         is Loading -> ProgressBar()
-        is Success -> booksResponse.data?.let { books ->
-            booksContent(books)
-        }
-        is Failure -> printError(booksResponse.e)
+        is Success -> Unit
+        is Failure -> printError(editBookResponse.e)
     }
 }

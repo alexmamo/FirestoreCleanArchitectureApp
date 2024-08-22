@@ -5,8 +5,8 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.TAG
 
 class Utils {
     companion object {
-        fun print(e: Exception?) = e?.apply {
-            Log.e(TAG, stackTraceToString())
+        fun printError(e: Exception?) = e?.apply {
+            Log.e(TAG, "$message")
         }
     }
 }

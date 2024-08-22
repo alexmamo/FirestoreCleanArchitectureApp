@@ -10,20 +10,26 @@ import kotlinx.coroutines.launch
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.AddBookResponse
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.DeleteBookResponse
-import ro.alexmamo.firestorecleanarchitecture.domain.use_case.UseCases
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.EditBookResponse
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.GetBookResponse
 import javax.inject.Inject
 
 @HiltViewModel
 class BooksViewModel @Inject constructor(
-    private val useCases: UseCases
+    private val repo: BooksRepository
 ): ViewModel() {
     var booksResponse by mutableStateOf<BooksResponse>(Loading)
         private set
-    var addBookResponse by mutableStateOf<AddBookResponse>(Success(false))
+    var addBookResponse by mutableStateOf<AddBookResponse>(Success(null))
         private set
-    var deleteBookResponse by mutableStateOf<DeleteBookResponse>(Success(false))
+    var getBookResponse by mutableStateOf<GetBookResponse>(Success(null))
+        private set
+    var editBookResponse by mutableStateOf<EditBookResponse>(Success(null))
+        private set
+    var deleteBookResponse by mutableStateOf<DeleteBookResponse>(Success(null))
         private set
 
     init {
@@ -31,18 +37,28 @@ class BooksViewModel @Inject constructor(
     }
 
     private fun getBooks() = viewModelScope.launch {
-        useCases.getBooks().collect { response ->
+        repo.getBooks().collect { response ->
             booksResponse = response
         }
     }
 
-    fun addBook(title: String, author: String) = viewModelScope.launch {
+    fun addBook(book: MutableMap<String, Any>) = viewModelScope.launch {
         addBookResponse = Loading
-        addBookResponse = useCases.addBook(title, author)
+        addBookResponse = repo.addBook(book)
     }
 
-    fun deleteBook(bookId: String) = viewModelScope.launch {
+    fun getBook(id: String) = viewModelScope.launch {
+        getBookResponse = Loading
+        getBookResponse = repo.getBookById(id)
+    }
+
+    fun editBook(id: String, book: MutableMap<String, Any>) = viewModelScope.launch {
+        editBookResponse = Loading
+        editBookResponse = repo.editBook(id, book)
+    }
+
+    fun deleteBook(id: String) = viewModelScope.launch {
         deleteBookResponse = Loading
-        deleteBookResponse = useCases.deleteBook(bookId)
+        deleteBookResponse = repo.deleteBookById(id)
     }
 }
