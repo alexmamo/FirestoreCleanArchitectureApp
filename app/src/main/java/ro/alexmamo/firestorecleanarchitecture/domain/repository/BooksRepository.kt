@@ -8,17 +8,17 @@ typealias Books = List<Book>
 typealias BooksResponse = Response<Books>
 typealias AddBookResponse = Response<Boolean>
 typealias GetBookResponse = Response<Book>
-typealias EditBookResponse = Response<Boolean>
+typealias UpdateBookResponse = Response<Boolean>
 typealias DeleteBookResponse = Response<Boolean>
 
 interface BooksRepository {
     fun getBooks(): Flow<BooksResponse>
 
-    suspend fun addBook(book: MutableMap<String, Any>): AddBookResponse
+    suspend fun addBook(book: Map<String, Any>): AddBookResponse
 
-    suspend fun getBookById(bookId: String): GetBookResponse
+    suspend fun getBookById(id: String): GetBookResponse
 
-    suspend fun editBook(bookId: String, book: MutableMap<String, Any>): EditBookResponse
+    suspend fun updateBook(id: String, book: MutableMap<String, Any>): UpdateBookResponse
 
-    suspend fun deleteBookById(bookId: String): DeleteBookResponse
+    suspend fun deleteBookById(id: String): DeleteBookResponse
 }

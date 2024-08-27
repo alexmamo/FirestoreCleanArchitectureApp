@@ -13,7 +13,7 @@ import ro.alexmamo.firestorecleanarchitecture.domain.repository.Books
 fun BooksContent(
     padding: PaddingValues,
     books: Books,
-    editBook: (id: String) -> Unit,
+    updateBook: (id: String) -> Unit,
     deleteBook: (id: String) -> Unit
 ) {
     LazyColumn(
@@ -24,9 +24,9 @@ fun BooksContent(
         ) { book ->
             BookCard(
                 book = book,
-                editBook = {
+                updateBook = {
                     book.id?.let { id ->
-                        editBook(id)
+                        updateBook(id)
                     }
                 },
                 deleteBook = {

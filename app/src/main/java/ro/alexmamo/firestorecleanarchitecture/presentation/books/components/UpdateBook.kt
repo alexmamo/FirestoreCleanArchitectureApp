@@ -1,21 +1,21 @@
 package ro.alexmamo.firestorecleanarchitecture.presentation.books.components
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ro.alexmamo.firestorecleanarchitecture.components.ProgressBar
-import ro.alexmamo.firestorecleanarchitecture.core.Utils.Companion.printError
+import ro.alexmamo.firestorecleanarchitecture.core.printError
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Failure
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.BooksViewModel
 
 @Composable
-fun EditBook(
-    viewModel: BooksViewModel = hiltViewModel()
+fun UpdateBook(
+    viewModel: BooksViewModel = viewModel()
 ) {
-    when(val editBookResponse = viewModel.editBookResponse) {
+    when(val updateBookResponse = viewModel.updateBookResponse) {
         is Loading -> ProgressBar()
         is Success -> Unit
-        is Failure -> printError(editBookResponse.e)
+        is Failure -> printError(updateBookResponse.e)
     }
 }

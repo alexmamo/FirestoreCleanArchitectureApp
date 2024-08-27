@@ -1,7 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.google.services)
     alias(libs.plugins.hilt.android)
 }
@@ -33,22 +34,17 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
-    packaging {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
 }
 
 dependencies {
     //Compose
-    implementation(platform(libs.androidx.compose.bom))
-    implementation(libs.androidx.compose.material)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.compose.material)
+    implementation(libs.activity.compose)
+    implementation(libs.viewmodel.compose)
     //Hilt
     implementation(libs.hilt)
-    kapt(libs.hilt.compiler)
-    //Hilt Navigation Compose
-    implementation(libs.androidx.hilt.navigation.compose)
+    ksp(libs.hilt.compiler)
     //Firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)

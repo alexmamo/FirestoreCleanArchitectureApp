@@ -9,10 +9,10 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.EDIT_BOOK
 
 @Composable
 fun EditBookIcon(
-    editBook: () -> Unit
+    updateBook: () -> Unit
 ) {
     IconButton(
-        onClick = editBook
+        onClick = updateBook
     ) {
         Icon(
             imageVector = Icons.Default.Edit,

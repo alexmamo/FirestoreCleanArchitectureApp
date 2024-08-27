@@ -1,8 +1,10 @@
 [versions]
 #Android
-androidGradlePlugin = "8.5.2"
+gradle = "8.5.2"
 #Kotlin
-kotlin = "1.9.25"
+kotlin = "2.0.20"
+#Ksp
+devtoolsKsp = "2.0.20-1.0.24"
 #Google
 googleServices = "4.4.2"
 #Hilt
@@ -10,21 +12,24 @@ hiltAndroid = "2.52"
 #Libraries
 composeBom = "2024.08.00"
 compose = "1.5.15"
-navigationCompose = "1.2.0"
-firebaseBom = "33.1.2"
+activityCompose = "1.9.1"
+viewmodelCompose = "2.8.4"
+firebaseBom = "33.2.0"
 
 [plugins]
-android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android-application = { id = "com.android.application", version.ref = "gradle" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+devtools-ksp = { id = "com.google.devtools.ksp", version.ref = "devtoolsKsp" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 
 [libraries]
-androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-androidx-compose-material = { module = "androidx.compose.material:material" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
+compose-material = { module = "androidx.compose.material:material" }
+activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
-androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "navigationCompose" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 firebase-firestore = { module = "com.google.firebase:firebase-firestore" }

@@ -13,7 +13,7 @@ import ro.alexmamo.firestorecleanarchitecture.domain.repository.AddBookResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.DeleteBookResponse
-import ro.alexmamo.firestorecleanarchitecture.domain.repository.EditBookResponse
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.UpdateBookResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.GetBookResponse
 import javax.inject.Inject
 
@@ -27,7 +27,7 @@ class BooksViewModel @Inject constructor(
         private set
     var getBookResponse by mutableStateOf<GetBookResponse>(Success(null))
         private set
-    var editBookResponse by mutableStateOf<EditBookResponse>(Success(null))
+    var updateBookResponse by mutableStateOf<UpdateBookResponse>(Success(null))
         private set
     var deleteBookResponse by mutableStateOf<DeleteBookResponse>(Success(null))
         private set
@@ -42,7 +42,7 @@ class BooksViewModel @Inject constructor(
         }
     }
 
-    fun addBook(book: MutableMap<String, Any>) = viewModelScope.launch {
+    fun addBook(book: Map<String, Any>) = viewModelScope.launch {
         addBookResponse = Loading
         addBookResponse = repo.addBook(book)
     }
@@ -52,9 +52,9 @@ class BooksViewModel @Inject constructor(
         getBookResponse = repo.getBookById(id)
     }
 
-    fun editBook(id: String, book: MutableMap<String, Any>) = viewModelScope.launch {
-        editBookResponse = Loading
-        editBookResponse = repo.editBook(id, book)
+    fun updateBook(id: String, book: MutableMap<String, Any>) = viewModelScope.launch {
+        updateBookResponse = Loading
+        updateBookResponse = repo.updateBook(id, book)
     }
 
     fun deleteBook(id: String) = viewModelScope.launch {

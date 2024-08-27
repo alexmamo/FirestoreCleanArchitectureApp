@@ -16,7 +16,7 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 @Composable
 fun BookCard(
     book: Book,
-    editBook: () -> Unit,
+    updateBook: () -> Unit,
     deleteBook: () -> Unit
 ) {
     Card(
@@ -47,7 +47,7 @@ fun BookCard(
                 modifier = Modifier.weight(1f)
             )
             EditBookIcon(
-                editBook = editBook
+                updateBook = updateBook
             )
             DeleteBookIcon(
                 deleteBook = deleteBook

@@ -6,23 +6,28 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import ro.alexmamo.firestorecleanarchitecture.components.TopBar
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_AUTHOR_MESSAGE
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_TITLE_MESSAGE
+import ro.alexmamo.firestorecleanarchitecture.core.toastMessage
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBook
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookAlertDialog
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookFloatingActionButton
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.Books
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BooksContent
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.DeleteBook
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.EditBook
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.EditBookAlertDialog
+import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.UpdateBook
+import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.UpdateBookAlertDialog
 
 @Composable
 fun BooksScreen(
-    viewModel: BooksViewModel = hiltViewModel()
+    viewModel: BooksViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     var openAddBookDialog by remember { mutableStateOf(false) }
-    var openEditBookDialog by remember { mutableStateOf(false) }
+    var openUpdateBookDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -34,8 +39,8 @@ fun BooksScreen(
                     BooksContent(
                         padding = padding,
                         books = books,
-                        editBook = { id ->
-                            openEditBookDialog = true
+                        updateBook = { id ->
+                            openUpdateBookDialog = true
                             viewModel.getBook(id)
                         },
                         deleteBook = { id ->
@@ -55,6 +60,12 @@ fun BooksScreen(
     )
     if (openAddBookDialog) {
         AddBookAlertDialog(
+            showEmptyTitleMessage = {
+                toastMessage(context, EMPTY_TITLE_MESSAGE)
+            },
+            showEmptyAuthorMessage = {
+                toastMessage(context, EMPTY_AUTHOR_MESSAGE)
+            },
             addBook = { book ->
                 viewModel.addBook(book)
             },
@@ -63,17 +74,23 @@ fun BooksScreen(
             }
         )
     }
-    if (openEditBookDialog) {
-        EditBookAlertDialog(
-            editBook = { id, book ->
-                viewModel.editBook(id, book)
+    if (openUpdateBookDialog) {
+        UpdateBookAlertDialog(
+            showEmptyTitleMessage = {
+                toastMessage(context, EMPTY_TITLE_MESSAGE)
+            },
+            showEmptyAuthorMessage = {
+                toastMessage(context, EMPTY_AUTHOR_MESSAGE)
+            },
+            updateBook = { id, book ->
+                viewModel.updateBook(id, book)
             },
             closeDialog = {
-                openEditBookDialog = false
+                openUpdateBookDialog = false
             }
         )
     }
     AddBook()
-    EditBook()
+    UpdateBook()
     DeleteBook()
 }

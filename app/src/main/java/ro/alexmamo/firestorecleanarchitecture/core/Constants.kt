@@ -23,4 +23,8 @@ object Constants {
     const val AUTHOR_NAME = "Type the author name..."
     const val BOOK_TITLE = "Type a book title..."
     const val EMPTY_STRING = ""
+
+    //Messages
+    const val EMPTY_TITLE_MESSAGE = "Title cannot be empty."
+    const val EMPTY_AUTHOR_MESSAGE = "Author cannot be empty."
 }

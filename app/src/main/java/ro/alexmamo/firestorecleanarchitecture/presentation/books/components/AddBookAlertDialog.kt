@@ -30,7 +30,9 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.TITLE
 
 @Composable
 fun AddBookAlertDialog(
-    addBook: (book: MutableMap<String, Any>) -> Unit,
+    showEmptyTitleMessage: () -> Unit,
+    showEmptyAuthorMessage: () -> Unit,
+    addBook: (book: Map<String, Any>) -> Unit,
     closeDialog: () -> Unit
 ) {
     var title by remember { mutableStateOf(EMPTY_STRING) }
@@ -78,13 +80,19 @@ fun AddBookAlertDialog(
         confirmButton = {
             ConfirmButton(
                 confirmText = ADD_BUTTON,
-                closeDialog = closeDialog,
                 confirmAction = {
-                    val book = mutableMapOf<String, Any>(
-                        AUTHOR to author,
-                        TITLE to title
-                    )
-                    addBook(book)
+                    if (title.isEmpty()) {
+                        showEmptyTitleMessage()
+                    } else if (author.isEmpty()) {
+                        showEmptyAuthorMessage()
+                    } else {
+                        val book = mapOf<String, Any>(
+                            AUTHOR to author,
+                            TITLE to title
+                        )
+                        addBook(book)
+                        closeDialog()
+                    }
                 }
             )
         },
