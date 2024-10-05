@@ -10,11 +10,11 @@ googleServices = "4.4.2"
 #Hilt
 hiltAndroid = "2.52"
 #Libraries
-composeBom = "2024.08.00"
+composeBom = "2024.09.03"
 compose = "1.5.15"
-activityCompose = "1.9.1"
-viewmodelCompose = "2.8.4"
-firebaseBom = "33.2.0"
+activityCompose = "1.9.2"
+viewmodelCompose = "2.8.6"
+firebaseBom = "33.4.0"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }
@@ -26,7 +26,7 @@ hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndro
 
 [libraries]
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
-compose-material = { module = "androidx.compose.material:material" }
+compose-material3 = { module = "androidx.compose.material3:material3" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
 viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }

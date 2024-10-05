@@ -22,11 +22,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_19
+        targetCompatibility = JavaVersion.VERSION_19
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
+        jvmTarget = JavaVersion.VERSION_19.toString()
     }
     buildFeatures {
         compose = true
@@ -39,7 +39,7 @@ android {
 dependencies {
     //Compose
     implementation(platform(libs.compose.bom))
-    implementation(libs.compose.material)
+    implementation(libs.compose.material3)
     implementation(libs.activity.compose)
     implementation(libs.viewmodel.compose)
     //Hilt
