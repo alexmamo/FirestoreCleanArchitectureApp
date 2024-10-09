@@ -21,18 +21,17 @@ import ro.alexmamo.firestorecleanarchitecture.components.ConfirmButton
 import ro.alexmamo.firestorecleanarchitecture.components.DismissButton
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD_BOOK
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD_BUTTON
-import ro.alexmamo.firestorecleanarchitecture.core.Constants.AUTHOR
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.AUTHOR_NAME
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.BOOK_TITLE
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.DISMISS_BUTTON
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_STRING
-import ro.alexmamo.firestorecleanarchitecture.core.Constants.TITLE
+import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 
 @Composable
 fun AddBookAlertDialog(
     showEmptyTitleMessage: () -> Unit,
     showEmptyAuthorMessage: () -> Unit,
-    addBook: (book: Map<String, Any>) -> Unit,
+    addBook: (book: Book) -> Unit,
     closeDialog: () -> Unit
 ) {
     var title by remember { mutableStateOf(EMPTY_STRING) }
@@ -80,15 +79,15 @@ fun AddBookAlertDialog(
         confirmButton = {
             ConfirmButton(
                 confirmText = ADD_BUTTON,
-                confirmAction = {
+                onConfirmButtonClick = {
                     if (title.isEmpty()) {
                         showEmptyTitleMessage()
                     } else if (author.isEmpty()) {
                         showEmptyAuthorMessage()
                     } else {
-                        val book = mapOf<String, Any>(
-                            AUTHOR to author,
-                            TITLE to title
+                        val book = Book(
+                            author = author,
+                            title = title
                         )
                         addBook(book)
                         closeDialog()
@@ -99,7 +98,7 @@ fun AddBookAlertDialog(
         dismissButton = {
             DismissButton(
                 dismissText = DISMISS_BUTTON,
-                closeDialog = closeDialog
+                onDismissButtonClick = closeDialog
             )
         }
     )

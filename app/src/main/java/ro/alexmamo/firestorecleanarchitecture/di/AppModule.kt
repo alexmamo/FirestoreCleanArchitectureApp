@@ -1,6 +1,5 @@
 package ro.alexmamo.firestorecleanarchitecture.di
 
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -19,12 +18,9 @@ object AppModule {
     fun provideFirebaseFirestore() = Firebase.firestore
 
     @Provides
-    fun provideBooksRef(
-        db: FirebaseFirestore
-    ) = db.collection(BOOKS)
-
-    @Provides
     fun provideBooksRepository(
-        booksRef: CollectionReference
-    ): BooksRepository = BooksRepositoryImpl(booksRef)
+        db: FirebaseFirestore
+    ): BooksRepository = BooksRepositoryImpl(
+        booksRef = db.collection(BOOKS)
+    )
 }

@@ -35,14 +35,14 @@ class BooksRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun addBook(book: Map<String, Any>) = try {
+    override suspend fun addBook(book: Book) = try {
         booksRef.add(book).await()
         Success(true)
     } catch (e: Exception) {
         Failure(e)
     }
 
-    override suspend fun getBookById(id: String) = try {
+    override suspend fun getBook(id: String) = try {
         val book = booksRef.document(id).get().await().toObject(Book::class.java)?.apply {
             this.id = id
         }
@@ -51,14 +51,19 @@ class BooksRepositoryImpl @Inject constructor(
         Failure(e)
     }
 
-    override suspend fun updateBook(id: String, book: MutableMap<String, Any>) = try {
-        booksRef.document(id).update(book).await()
+    override suspend fun updateBook(book: Book) = try {
+        book.id?.let { id ->
+            booksRef.document(id).update(mapOf(
+                AUTHOR to book.author,
+                TITLE to book.title
+            )).await()
+        }
         Success(true)
     } catch (e: Exception) {
         Failure(e)
     }
 
-    override suspend fun deleteBookById(id: String) = try {
+    override suspend fun deleteBook(id: String) = try {
         booksRef.document(id).delete().await()
         Success(true)
     } catch (e: Exception) {

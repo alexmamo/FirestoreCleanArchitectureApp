@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 @Composable
 fun DismissButton(
     dismissText: String,
-    closeDialog: () -> Unit,
+    onDismissButtonClick: () -> Unit,
 ) {
     TextButton(
-        onClick = closeDialog
+        onClick = onDismissButtonClick
     ) {
         Text(
             text = dismissText

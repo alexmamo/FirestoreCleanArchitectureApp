@@ -12,6 +12,7 @@ import ro.alexmamo.firestorecleanarchitecture.components.ProgressBar
 import ro.alexmamo.firestorecleanarchitecture.components.TopBar
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_AUTHOR_MESSAGE
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_TITLE_MESSAGE
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.NO_UPDATES_MESSAGE
 import ro.alexmamo.firestorecleanarchitecture.core.printError
 import ro.alexmamo.firestorecleanarchitecture.core.toastMessage
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Failure
@@ -20,6 +21,7 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookAlertDialog
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookFloatingActionButton
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BooksContent
+import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.EmptyContent
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.UpdateBookAlertDialog
 
 @Composable
@@ -38,17 +40,21 @@ fun BooksScreen(
             when(val booksResponse = viewModel.booksResponse) {
                 is Loading -> ProgressBar()
                 is Success -> booksResponse.data?.let { books ->
-                    BooksContent(
-                        padding = padding,
-                        books = books,
-                        updateBook = { id ->
-                            openUpdateBookDialog = true
-                            viewModel.getBook(id)
-                        },
-                        deleteBook = { id ->
-                            viewModel.deleteBook(id)
-                        }
-                    )
+                    if (books.isEmpty()) {
+                        EmptyContent()
+                    } else {
+                        BooksContent(
+                            padding = padding,
+                            books = books,
+                            updateBook = { id ->
+                                openUpdateBookDialog = true
+                                viewModel.getBook(id)
+                            },
+                            deleteBook = { id ->
+                                viewModel.deleteBook(id)
+                            }
+                        )
+                    }
                 }
                 is Failure -> printError(booksResponse.e)
             }
@@ -78,26 +84,29 @@ fun BooksScreen(
         )
     }
     if (openUpdateBookDialog) {
-        when(val getBookResponse = viewModel.getBookResponse) {
+        when(val bookResponse = viewModel.bookResponse) {
             is Loading -> ProgressBar()
-            is Success -> getBookResponse.data?.let { selectedBook ->
+            is Success -> bookResponse.data?.let { book ->
                 UpdateBookAlertDialog(
-                    selectedBook = selectedBook,
+                    book = book,
                     showEmptyTitleMessage = {
                         toastMessage(context, EMPTY_TITLE_MESSAGE)
                     },
                     showEmptyAuthorMessage = {
                         toastMessage(context, EMPTY_AUTHOR_MESSAGE)
                     },
-                    updateBook = { id, book ->
-                        viewModel.updateBook(id, book)
+                    updateBook = { book ->
+                        viewModel.updateBook(book)
+                    },
+                    showNoUpdatesMessage = {
+                        toastMessage(context, NO_UPDATES_MESSAGE)
                     },
                     closeDialog = {
                         openUpdateBookDialog = false
                     }
                 )
             }
-            is Failure -> printError(getBookResponse.e)
+            is Failure -> printError(bookResponse.e)
         }
     }
     when(val addBookResponse = viewModel.addBookResponse) {

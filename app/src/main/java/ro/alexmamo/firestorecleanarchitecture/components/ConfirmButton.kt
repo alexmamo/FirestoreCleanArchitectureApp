@@ -7,10 +7,10 @@ import androidx.compose.runtime.Composable
 @Composable
 fun ConfirmButton(
     confirmText: String,
-    confirmAction: () -> Unit
+    onConfirmButtonClick: () -> Unit
 ) {
     TextButton(
-        onClick = confirmAction
+        onClick = onConfirmButtonClick
     ) {
         Text(
             text = confirmText

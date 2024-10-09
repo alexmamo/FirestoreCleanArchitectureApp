@@ -4,15 +4,15 @@ object Constants {
     //App
     const val TAG = "AppTag"
 
-    //Firestore
+    //Firestore Collections
     const val BOOKS = "books"
+    //Document Fields
     const val AUTHOR = "author"
     const val TITLE = "title"
 
     //Actions
     const val ADD_BOOK = "Add a book"
-    const val EDIT_BOOK = "Edit a book"
-    const val DELETE_BOOK = "Delete a book"
+    const val UPDATE_BOOK = "Update a book"
 
     //Buttons
     const val ADD_BUTTON = "Add"
@@ -27,4 +27,6 @@ object Constants {
     //Messages
     const val EMPTY_TITLE_MESSAGE = "Title cannot be empty."
     const val EMPTY_AUTHOR_MESSAGE = "Author cannot be empty."
+    const val NO_UPDATES_MESSAGE = "No updates performed."
+    const val EMPTY_BOOK_LIST_MESSAGE = "The book list is empty."
 }

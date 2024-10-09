@@ -7,14 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.AddBookResponse
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.BookResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.DeleteBookResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.UpdateBookResponse
-import ro.alexmamo.firestorecleanarchitecture.domain.repository.GetBookResponse
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,7 +26,7 @@ class BooksViewModel @Inject constructor(
         private set
     var addBookResponse by mutableStateOf<AddBookResponse>(Success(null))
         private set
-    var getBookResponse by mutableStateOf<GetBookResponse>(Success(null))
+    var bookResponse by mutableStateOf<BookResponse>(Success(null))
         private set
     var updateBookResponse by mutableStateOf<UpdateBookResponse>(Success(null))
         private set
@@ -42,23 +43,23 @@ class BooksViewModel @Inject constructor(
         }
     }
 
-    fun addBook(book: Map<String, Any>) = viewModelScope.launch {
+    fun addBook(book: Book) = viewModelScope.launch {
         addBookResponse = Loading
         addBookResponse = repo.addBook(book)
     }
 
     fun getBook(id: String) = viewModelScope.launch {
-        getBookResponse = Loading
-        getBookResponse = repo.getBookById(id)
+        bookResponse = Loading
+        bookResponse = repo.getBook(id)
     }
 
-    fun updateBook(id: String, book: MutableMap<String, Any>) = viewModelScope.launch {
+    fun updateBook(book: Book) = viewModelScope.launch {
         updateBookResponse = Loading
-        updateBookResponse = repo.updateBook(id, book)
+        updateBookResponse = repo.updateBook(book)
     }
 
     fun deleteBook(id: String) = viewModelScope.launch {
         deleteBookResponse = Loading
-        deleteBookResponse = repo.deleteBookById(id)
+        deleteBookResponse = repo.deleteBook(id)
     }
 }

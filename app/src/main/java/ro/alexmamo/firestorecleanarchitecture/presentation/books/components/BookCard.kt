@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import ro.alexmamo.firestorecleanarchitecture.components.DeleteIcon
+import ro.alexmamo.firestorecleanarchitecture.components.EditIcon
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 
 @Composable
@@ -46,11 +48,11 @@ fun BookCard(
             Spacer(
                 modifier = Modifier.weight(1f)
             )
-            EditBookIcon(
-                updateBook = updateBook
+            EditIcon(
+                onEditIconClick = updateBook
             )
-            DeleteBookIcon(
-                deleteBook = deleteBook
+            DeleteIcon(
+                onDeleteIconClick = deleteBook
             )
         }
     }

@@ -15,31 +15,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ro.alexmamo.firestorecleanarchitecture.components.ConfirmButton
 import ro.alexmamo.firestorecleanarchitecture.components.DismissButton
-import ro.alexmamo.firestorecleanarchitecture.core.Constants.AUTHOR
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.AUTHOR_NAME
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.BOOK_TITLE
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.DISMISS_BUTTON
-import ro.alexmamo.firestorecleanarchitecture.core.Constants.EDIT_BOOK
-import ro.alexmamo.firestorecleanarchitecture.core.Constants.TITLE
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.UPDATE_BOOK
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.UPDATE_BUTTON
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 
 @Composable
 fun UpdateBookAlertDialog(
-    selectedBook: Book,
+    book: Book,
     showEmptyTitleMessage: () -> Unit,
     showEmptyAuthorMessage: () -> Unit,
-    updateBook: (id: String, book: MutableMap<String, Any>) -> Unit,
+    updateBook: (book: Book) -> Unit,
+    showNoUpdatesMessage: () -> Unit,
     closeDialog: () -> Unit
 ) {
-    var author by remember { mutableStateOf(selectedBook.author.orEmpty()) }
-    var title by remember { mutableStateOf(selectedBook.title.orEmpty()) }
+    var author by remember { mutableStateOf(book.author.orEmpty()) }
+    var title by remember { mutableStateOf(book.title.orEmpty()) }
 
     AlertDialog(
         onDismissRequest = closeDialog,
         title = {
             Text(
-                text = EDIT_BOOK
+                text = UPDATE_BOOK
             )
         },
         text = {
@@ -74,24 +73,23 @@ fun UpdateBookAlertDialog(
         confirmButton = {
             ConfirmButton(
                 confirmText = UPDATE_BUTTON,
-                confirmAction = {
+                onConfirmButtonClick = {
                     if (title.isEmpty()) {
                         showEmptyTitleMessage()
                     } else if (author.isEmpty()) {
                         showEmptyAuthorMessage()
                     } else {
-                        val bookUpdates = mutableMapOf<String, Any>().apply {
-                            if (selectedBook.author != author) {
-                                put(AUTHOR, author)
-                            }
-                            if (selectedBook.title != title) {
-                                put(TITLE, title)
-                            }
+                        val updatedBook = Book(
+                            id = book.id,
+                            author = author,
+                            title = title
+                        )
+                        if (updatedBook != book) {
+                            updateBook(updatedBook)
+                        } else {
+                            showNoUpdatesMessage()
                         }
-                        selectedBook.id?.let { id ->
-                            updateBook(id, bookUpdates)
-                            closeDialog()
-                        }
+                        closeDialog()
                     }
                 }
             )
@@ -99,7 +97,7 @@ fun UpdateBookAlertDialog(
         dismissButton = {
             DismissButton(
                 dismissText = DISMISS_BUTTON,
-                closeDialog = closeDialog
+                onDismissButtonClick = closeDialog
             )
         }
     )
