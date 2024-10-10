@@ -19,6 +19,10 @@ object Constants {
     const val UPDATE_BUTTON = "Update"
     const val DISMISS_BUTTON = "Dismiss"
 
+    //Content Descriptions
+    const val EDIT_ITEM = "Edit item"
+    const val DELETE_ITEM = "Delete item"
+
     //Placeholders
     const val AUTHOR_NAME = "Type the author name..."
     const val BOOK_TITLE = "Type a book title..."

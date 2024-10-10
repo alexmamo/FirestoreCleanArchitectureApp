@@ -15,6 +15,7 @@ import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_TITLE_MESSAGE
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.NO_UPDATES_MESSAGE
 import ro.alexmamo.firestorecleanarchitecture.core.printError
 import ro.alexmamo.firestorecleanarchitecture.core.toastMessage
+import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Failure
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
@@ -31,6 +32,7 @@ fun BooksScreen(
     val context = LocalContext.current
     var openAddBookDialog by remember { mutableStateOf(false) }
     var openUpdateBookDialog by remember { mutableStateOf(false) }
+    var book by remember { mutableStateOf(Book()) }
 
     Scaffold(
         topBar = {
@@ -46,9 +48,9 @@ fun BooksScreen(
                         BooksContent(
                             padding = padding,
                             books = books,
-                            updateBook = { id ->
+                            updateBook = { bookToUpdate ->
+                                book = bookToUpdate
                                 openUpdateBookDialog = true
-                                viewModel.getBook(id)
                             },
                             deleteBook = { id ->
                                 viewModel.deleteBook(id)
@@ -84,30 +86,24 @@ fun BooksScreen(
         )
     }
     if (openUpdateBookDialog) {
-        when(val bookResponse = viewModel.bookResponse) {
-            is Loading -> ProgressBar()
-            is Success -> bookResponse.data?.let { book ->
-                UpdateBookAlertDialog(
-                    book = book,
-                    showEmptyTitleMessage = {
-                        toastMessage(context, EMPTY_TITLE_MESSAGE)
-                    },
-                    showEmptyAuthorMessage = {
-                        toastMessage(context, EMPTY_AUTHOR_MESSAGE)
-                    },
-                    updateBook = { book ->
-                        viewModel.updateBook(book)
-                    },
-                    showNoUpdatesMessage = {
-                        toastMessage(context, NO_UPDATES_MESSAGE)
-                    },
-                    closeDialog = {
-                        openUpdateBookDialog = false
-                    }
-                )
+        UpdateBookAlertDialog(
+            book = book,
+            showEmptyTitleMessage = {
+                toastMessage(context, EMPTY_TITLE_MESSAGE)
+            },
+            showEmptyAuthorMessage = {
+                toastMessage(context, EMPTY_AUTHOR_MESSAGE)
+            },
+            updateBook = { book ->
+                viewModel.updateBook(book)
+            },
+            showNoUpdatesMessage = {
+                toastMessage(context, NO_UPDATES_MESSAGE)
+            },
+            closeDialog = {
+                openUpdateBookDialog = false
             }
-            is Failure -> printError(bookResponse.e)
-        }
+        )
     }
     when(val addBookResponse = viewModel.addBookResponse) {
         is Loading -> ProgressBar()

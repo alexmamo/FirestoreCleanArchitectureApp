@@ -42,15 +42,6 @@ class BooksRepositoryImpl @Inject constructor(
         Failure(e)
     }
 
-    override suspend fun getBook(id: String) = try {
-        val book = booksRef.document(id).get().await().toObject(Book::class.java)?.apply {
-            this.id = id
-        }
-        Success(book)
-    } catch (e: Exception) {
-        Failure(e)
-    }
-
     override suspend fun updateBook(book: Book) = try {
         book.id?.let { id ->
             booksRef.document(id).update(mapOf(

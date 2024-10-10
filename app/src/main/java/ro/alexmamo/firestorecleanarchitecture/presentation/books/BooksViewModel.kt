@@ -11,7 +11,6 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.AddBookResponse
-import ro.alexmamo.firestorecleanarchitecture.domain.repository.BookResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.DeleteBookResponse
@@ -25,8 +24,6 @@ class BooksViewModel @Inject constructor(
     var booksResponse by mutableStateOf<BooksResponse>(Loading)
         private set
     var addBookResponse by mutableStateOf<AddBookResponse>(Success(null))
-        private set
-    var bookResponse by mutableStateOf<BookResponse>(Success(null))
         private set
     var updateBookResponse by mutableStateOf<UpdateBookResponse>(Success(null))
         private set
@@ -46,11 +43,6 @@ class BooksViewModel @Inject constructor(
     fun addBook(book: Book) = viewModelScope.launch {
         addBookResponse = Loading
         addBookResponse = repo.addBook(book)
-    }
-
-    fun getBook(id: String) = viewModelScope.launch {
-        bookResponse = Loading
-        bookResponse = repo.getBook(id)
     }
 
     fun updateBook(book: Book) = viewModelScope.launch {

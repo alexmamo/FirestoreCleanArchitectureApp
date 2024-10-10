@@ -18,8 +18,8 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 @Composable
 fun BookCard(
     book: Book,
-    updateBook: () -> Unit,
-    deleteBook: () -> Unit
+    onEditIconClick: () -> Unit,
+    onDeleteIconClick: () -> Unit
 ) {
     Card(
         shape = MaterialTheme.shapes.small,
@@ -49,10 +49,10 @@ fun BookCard(
                 modifier = Modifier.weight(1f)
             )
             EditIcon(
-                onEditIconClick = updateBook
+                onEditIconClick = onEditIconClick
             )
             DeleteIcon(
-                onDeleteIconClick = deleteBook
+                onDeleteIconClick = onDeleteIconClick
             )
         }
     }

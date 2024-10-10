@@ -5,6 +5,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.runtime.Composable
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.EDIT_ITEM
 
 @Composable
 fun EditIcon(
@@ -15,7 +16,7 @@ fun EditIcon(
     ) {
         Icon(
             imageVector = Icons.Default.Edit,
-            contentDescription = null,
+            contentDescription = EDIT_ITEM,
         )
     }
 }

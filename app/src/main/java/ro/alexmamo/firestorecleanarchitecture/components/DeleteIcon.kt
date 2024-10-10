@@ -5,6 +5,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.runtime.Composable
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.DELETE_ITEM
 
 @Composable
 fun DeleteIcon(
@@ -15,7 +16,7 @@ fun DeleteIcon(
     ) {
         Icon(
             imageVector = Icons.Default.Delete,
-            contentDescription = null,
+            contentDescription = DELETE_ITEM,
         )
     }
 }

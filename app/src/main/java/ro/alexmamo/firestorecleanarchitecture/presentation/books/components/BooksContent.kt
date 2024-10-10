@@ -7,13 +7,14 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.Books
 
 @Composable
 fun BooksContent(
     padding: PaddingValues,
     books: Books,
-    updateBook: (id: String) -> Unit,
+    updateBook: (book: Book) -> Unit,
     deleteBook: (id: String) -> Unit
 ) {
     LazyColumn(
@@ -24,12 +25,10 @@ fun BooksContent(
         ) { book ->
             BookCard(
                 book = book,
-                updateBook = {
-                    book.id?.let { id ->
-                        updateBook(id)
-                    }
+                onEditIconClick = {
+                    updateBook(book)
                 },
-                deleteBook = {
+                onDeleteIconClick = {
                     book.id?.let { id ->
                         deleteBook(id)
                     }
