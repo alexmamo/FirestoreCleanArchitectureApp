@@ -1,10 +1,10 @@
 [versions]
 #Android
-gradle = "8.7.0"
+gradle = "8.7.1"
 #Kotlin
-kotlin = "2.0.20"
+kotlin = "2.0.21"
 #Ksp
-devtoolsKsp = "2.0.20-1.0.25"
+devtoolsKsp = "2.0.21-1.0.25"
 #Google
 googleServices = "4.4.2"
 #Hilt
