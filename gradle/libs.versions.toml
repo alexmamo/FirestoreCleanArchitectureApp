@@ -10,9 +10,9 @@ googleServices = "4.4.2"
 #Hilt
 hiltAndroid = "2.52"
 #Libraries
-composeBom = "2024.09.03"
+composeBom = "2024.10.00"
 compose = "1.5.15"
-activityCompose = "1.9.2"
+activityCompose = "1.9.3"
 viewmodelCompose = "2.8.6"
 firebaseBom = "33.4.0"
 

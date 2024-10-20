@@ -22,7 +22,6 @@ fun BookCard(
     onDeleteIconClick: () -> Unit
 ) {
     Card(
-        shape = MaterialTheme.shapes.small,
         modifier = Modifier
             .padding(
                 start = 8.dp,
@@ -31,6 +30,7 @@ fun BookCard(
                 bottom = 4.dp
             )
             .fillMaxWidth(),
+        shape = MaterialTheme.shapes.small,
         elevation = 3.dp,
     ) {
         Row(

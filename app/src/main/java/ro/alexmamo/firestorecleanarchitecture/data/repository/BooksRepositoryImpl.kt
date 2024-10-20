@@ -11,11 +11,8 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Failure
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class BooksRepositoryImpl @Inject constructor(
+class BooksRepositoryImpl(
     private val booksRef: CollectionReference
 ): BooksRepository {
     override fun getBooks() = callbackFlow {
@@ -37,7 +34,7 @@ class BooksRepositoryImpl @Inject constructor(
 
     override suspend fun addBook(book: Book) = try {
         booksRef.add(book).await()
-        Success(true)
+        Success(Unit)
     } catch (e: Exception) {
         Failure(e)
     }
@@ -49,14 +46,14 @@ class BooksRepositoryImpl @Inject constructor(
                 TITLE to book.title
             )).await()
         }
-        Success(true)
+        Success(Unit)
     } catch (e: Exception) {
         Failure(e)
     }
 
     override suspend fun deleteBook(id: String) = try {
         booksRef.document(id).delete().await()
-        Success(true)
+        Success(Unit)
     } catch (e: Exception) {
         Failure(e)
     }

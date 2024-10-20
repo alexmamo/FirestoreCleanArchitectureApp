@@ -1,6 +1,11 @@
 package ro.alexmamo.firestorecleanarchitecture.presentation.books
 
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -10,6 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.viewmodel.compose.viewModel
 import ro.alexmamo.firestorecleanarchitecture.components.ProgressBar
 import ro.alexmamo.firestorecleanarchitecture.components.TopBar
+import ro.alexmamo.firestorecleanarchitecture.core.Constants.ADD_BOOK
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_AUTHOR_MESSAGE
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.EMPTY_TITLE_MESSAGE
 import ro.alexmamo.firestorecleanarchitecture.core.Constants.NO_UPDATES_MESSAGE
@@ -20,7 +26,6 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Failure
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookAlertDialog
-import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.AddBookFloatingActionButton
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.BooksContent
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.EmptyContent
 import ro.alexmamo.firestorecleanarchitecture.presentation.books.components.UpdateBookAlertDialog
@@ -62,13 +67,20 @@ fun BooksScreen(
             }
         },
         floatingActionButton = {
-            AddBookFloatingActionButton(
-                openDialog = {
+            FloatingActionButton(
+                backgroundColor = MaterialTheme.colors.primary,
+                onClick = {
                     openAddBookDialog = true
                 }
-            )
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = ADD_BOOK
+                )
+            }
         }
     )
+
     if (openAddBookDialog) {
         AddBookAlertDialog(
             showEmptyTitleMessage = {
@@ -85,6 +97,7 @@ fun BooksScreen(
             }
         )
     }
+
     if (openUpdateBookDialog) {
         UpdateBookAlertDialog(
             book = book,
@@ -105,16 +118,19 @@ fun BooksScreen(
             }
         )
     }
+
     when(val addBookResponse = viewModel.addBookResponse) {
         is Loading -> ProgressBar()
         is Success -> Unit
         is Failure -> printError(addBookResponse.e)
     }
+
     when(val updateBookResponse = viewModel.updateBookResponse) {
         is Loading -> ProgressBar()
         is Success -> Unit
         is Failure -> printError(updateBookResponse.e)
     }
+
     when(val deleteBookResponse = viewModel.deleteBookResponse) {
         is Loading -> ProgressBar()
         is Success -> Unit

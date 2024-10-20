@@ -29,8 +29,8 @@ object Constants {
     const val EMPTY_STRING = ""
 
     //Messages
+    const val EMPTY_BOOK_LIST_MESSAGE = "The book list is empty."
     const val EMPTY_TITLE_MESSAGE = "Title cannot be empty."
     const val EMPTY_AUTHOR_MESSAGE = "Author cannot be empty."
     const val NO_UPDATES_MESSAGE = "No updates performed."
-    const val EMPTY_BOOK_LIST_MESSAGE = "The book list is empty."
 }

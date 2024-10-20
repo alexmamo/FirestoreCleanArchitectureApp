@@ -6,9 +6,9 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 
 typealias Books = List<Book>
 typealias BooksResponse = Response<Books>
-typealias AddBookResponse = Response<Boolean>
-typealias UpdateBookResponse = Response<Boolean>
-typealias DeleteBookResponse = Response<Boolean>
+typealias AddBookResponse = Response<Unit>
+typealias UpdateBookResponse = Response<Unit>
+typealias DeleteBookResponse = Response<Unit>
 
 interface BooksRepository {
     fun getBooks(): Flow<BooksResponse>
