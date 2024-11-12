@@ -1,4 +1,4 @@
-package ro.alexmamo.firestorecleanarchitecture.presentation.books
+package ro.alexmamo.firestorecleanarchitecture.presentation.book_list
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,49 +9,45 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.AddBookResponse
-import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksRepository
-import ro.alexmamo.firestorecleanarchitecture.domain.repository.BooksResponse
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.BookListRepository
+import ro.alexmamo.firestorecleanarchitecture.domain.repository.BookListResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.DeleteBookResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.UpdateBookResponse
 import javax.inject.Inject
 
 @HiltViewModel
-class BooksViewModel @Inject constructor(
-    private val repo: BooksRepository
+class BookListViewModel @Inject constructor(
+    private val repo: BookListRepository
 ): ViewModel() {
-    var booksResponse by mutableStateOf<BooksResponse>(Loading)
+    var bookListResponse by mutableStateOf<BookListResponse>(Loading)
         private set
-    var addBookResponse by mutableStateOf<AddBookResponse>(Success(null))
+    var addBookResponse by mutableStateOf<AddBookResponse>(Loading)
         private set
-    var updateBookResponse by mutableStateOf<UpdateBookResponse>(Success(null))
+    var updateBookResponse by mutableStateOf<UpdateBookResponse>(Loading)
         private set
-    var deleteBookResponse by mutableStateOf<DeleteBookResponse>(Success(null))
+    var deleteBookResponse by mutableStateOf<DeleteBookResponse>(Loading)
         private set
 
     init {
-        getBooks()
+        getBookList()
     }
 
-    private fun getBooks() = viewModelScope.launch {
-        repo.getBooks().collect { response ->
-            booksResponse = response
+    private fun getBookList() = viewModelScope.launch {
+        repo.getBookList().collect { response ->
+            bookListResponse = response
         }
     }
 
     fun addBook(book: Book) = viewModelScope.launch {
-        addBookResponse = Loading
         addBookResponse = repo.addBook(book)
     }
 
     fun updateBook(book: Book) = viewModelScope.launch {
-        updateBookResponse = Loading
         updateBookResponse = repo.updateBook(book)
     }
 
     fun deleteBook(id: String) = viewModelScope.launch {
-        deleteBookResponse = Loading
         deleteBookResponse = repo.deleteBook(id)
     }
 }

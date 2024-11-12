@@ -1,4 +1,4 @@
-package ro.alexmamo.firestorecleanarchitecture.presentation.books.components
+package ro.alexmamo.firestorecleanarchitecture.presentation.book_list.components
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -8,10 +8,10 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun AuthorText(
-    authorText: String
+    author: String
 ) {
     Text(
-        text = "by $authorText",
+        text = "by $author",
         color = Color.DarkGray,
         fontSize = 12.sp,
         textDecoration = TextDecoration.Underline

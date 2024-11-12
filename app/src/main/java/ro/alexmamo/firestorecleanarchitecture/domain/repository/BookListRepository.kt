@@ -4,14 +4,13 @@ import kotlinx.coroutines.flow.Flow
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 
-typealias Books = List<Book>
-typealias BooksResponse = Response<Books>
-typealias AddBookResponse = Response<Unit>
-typealias UpdateBookResponse = Response<Unit>
-typealias DeleteBookResponse = Response<Unit>
+typealias BookListResponse = Response<List<Book>>
+typealias AddBookResponse = Response<String>
+typealias UpdateBookResponse = Response<Void>
+typealias DeleteBookResponse = Response<Void>
 
-interface BooksRepository {
-    fun getBooks(): Flow<BooksResponse>
+interface BookListRepository {
+    fun getBookList(): Flow<BookListResponse>
 
     suspend fun addBook(book: Book): AddBookResponse
 

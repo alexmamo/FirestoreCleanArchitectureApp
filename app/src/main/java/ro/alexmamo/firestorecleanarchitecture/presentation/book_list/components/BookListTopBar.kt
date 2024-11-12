@@ -1,4 +1,4 @@
-package ro.alexmamo.firestorecleanarchitecture.components
+package ro.alexmamo.firestorecleanarchitecture.presentation.book_list.components
 
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -7,11 +7,13 @@ import androidx.compose.ui.res.stringResource
 import ro.alexmamo.firestorecleanarchitecture.R
 
 @Composable
-fun TopBar() {
-    TopAppBar(
+fun BookListTopBar() {
+    TopAppBar (
         title = {
             Text(
-                text = stringResource(R.string.app_name)
+                text = stringResource(
+                    id = R.string.book_list_screen_title
+                )
             )
         }
     )

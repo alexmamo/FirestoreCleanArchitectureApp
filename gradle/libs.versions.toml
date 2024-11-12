@@ -1,20 +1,20 @@
 [versions]
 #Android
-gradle = "8.7.1"
+gradle = "8.7.2"
 #Kotlin
 kotlin = "2.0.21"
 #Ksp
-devtoolsKsp = "2.0.21-1.0.25"
+devtoolsKsp = "2.0.21-1.0.26"
 #Google
 googleServices = "4.4.2"
 #Hilt
 hiltAndroid = "2.52"
 #Libraries
-composeBom = "2024.10.00"
+composeBom = "2024.10.01"
 compose = "1.5.15"
 activityCompose = "1.9.3"
-viewmodelCompose = "2.8.6"
-firebaseBom = "33.4.0"
+viewmodelCompose = "2.8.7"
+firebaseBom = "33.5.1"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }

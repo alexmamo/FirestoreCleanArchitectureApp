@@ -1,3 +1,30 @@
 <resources>
+    <!--App-->
     <string name="app_name">FirestoreCleanArchitecture</string>
+    <!--Screen Titles-->
+    <string name="book_list_screen_title">"Book List"</string>
+    <string name="book_details_screen_title">"Book Details"</string>
+    <!--Texts-->
+    <string name="empty_book_list_text">"The book list is empty."</string>
+    <string name="add_book">"Add book"</string>
+    <!--Buttons-->
+    <string name="add_button">"Add"</string>
+    <string name="update_button">"Update"</string>
+    <string name="cancel_button">"Cancel"</string>
+    <!--Icons-->
+    <string name="edit_icon">"Edit"</string>
+    <string name="delete_icon">Delete</string>
+    <!--Content Descriptions-->
+    <string name="open_add_book_dialog">"Open add book dialog."</string>
+    <string name="navigate_back">Navigate back</string>
+    <!--Placeholders-->
+    <string name="book_title">"Type a book title…"</string>
+    <string name="book_author">"Type a book author…"</string>
+    <!--Messages-->
+    <string name="empty_title_message">"Title cannot be empty."</string>
+    <string name="empty_author_message">"Author cannot be empty."</string>
+    <string name="no_updates_message">"No updates performed."</string>
+
+    <!--ToDelete-->
+    <string name="to_delete">"ToDelete"</string>
 </resources>
