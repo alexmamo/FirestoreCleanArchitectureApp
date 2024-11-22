@@ -5,7 +5,6 @@ plugins {
     alias(libs.plugins.devtools.ksp)
     alias(libs.plugins.google.services)
     alias(libs.plugins.hilt.android)
-    //alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -19,7 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "ro.alexmamo.roomjetpackcompose.HiltTestRunner"
     }
 
     compileOptions {
