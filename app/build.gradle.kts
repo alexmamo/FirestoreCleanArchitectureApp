@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace = "ro.alexmamo.firestorecleanarchitecture"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "ro.alexmamo.firestorecleanarchitecture"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionName = "1.0"
 
@@ -22,11 +22,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_19
-        targetCompatibility = JavaVersion.VERSION_19
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_19.toString()
+        jvmTarget = JavaVersion.VERSION_21.toString()
     }
     buildFeatures {
         compose = true
@@ -47,6 +47,5 @@ dependencies {
     implementation(libs.hilt)
     ksp(libs.hilt.compiler)
     //Firebase
-    implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.firestore)
 }

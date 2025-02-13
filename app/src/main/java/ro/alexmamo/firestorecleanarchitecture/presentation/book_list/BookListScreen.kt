@@ -12,9 +12,7 @@ import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.LoadingIndicator
 import ro.alexmamo.firestorecleanarchitecture.core.printError
 import ro.alexmamo.firestorecleanarchitecture.core.showToastMessage
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Failure
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Success
+import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 import ro.alexmamo.firestorecleanarchitecture.presentation.book_list.components.AddBookAlertDialog
 import ro.alexmamo.firestorecleanarchitecture.presentation.book_list.components.AddBookFloatingActionButton
 import ro.alexmamo.firestorecleanarchitecture.presentation.book_list.components.BookListContent
@@ -44,8 +42,8 @@ fun BookListScreen(
         }
     ) { innerPadding ->
         when(val bookListResponse = viewModel.bookListResponse) {
-            is Loading -> LoadingIndicator()
-            is Success -> bookListResponse.data?.let { bookList ->
+            is Response.Loading -> LoadingIndicator()
+            is Response.Success -> bookListResponse.data?.let { bookList ->
                 if (bookList.isEmpty()) {
                     EmptyBookListContent()
                 } else {
@@ -72,7 +70,7 @@ fun BookListScreen(
                     )
                 }
             }
-            is Failure -> printError(bookListResponse.e)
+            is Response.Failure -> printError(bookListResponse.e)
         }
     }
 
@@ -96,25 +94,25 @@ fun BookListScreen(
 
     if (addingBook) {
         when(val addBookResponse = viewModel.addBookResponse) {
-            is Loading -> LoadingIndicator()
-            is Success -> addingBook = false
-            is Failure -> printError(addBookResponse.e)
+            is Response.Loading -> LoadingIndicator()
+            is Response.Success -> addingBook = false
+            is Response.Failure -> printError(addBookResponse.e)
         }
     }
 
     if (updatingBook) {
         when(val updateBookResponse = viewModel.updateBookResponse) {
-            is Loading -> LoadingIndicator()
-            is Success -> updatingBook = false
-            is Failure -> printError(updateBookResponse.e)
+            is Response.Loading -> LoadingIndicator()
+            is Response.Success -> updatingBook = false
+            is Response.Failure -> printError(updateBookResponse.e)
         }
     }
 
     if (deletingBook) {
         when(val deleteBookResponse = viewModel.deleteBookResponse) {
-            is Loading -> LoadingIndicator()
-            is Success -> deletingBook = false
-            is Failure -> printError(deleteBookResponse.e)
+            is Response.Loading -> LoadingIndicator()
+            is Response.Success -> deletingBook = false
+            is Response.Failure -> printError(deleteBookResponse.e)
         }
     }
 }
