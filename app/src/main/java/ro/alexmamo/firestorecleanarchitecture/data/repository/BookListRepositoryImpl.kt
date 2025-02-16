@@ -9,14 +9,14 @@ import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BookListRepository
 
-const val AUTHOR = "author"
-const val TITLE = "title"
+const val AUTHOR_FIELD = "author"
+const val TITLE_FIELD = "title"
 
 class BookListRepositoryImpl(
     private val booksRef: CollectionReference
 ): BookListRepository {
     override fun getBookList() = callbackFlow {
-        val listener = booksRef.orderBy(TITLE).addSnapshotListener { bookListSnapshot, e ->
+        val listener = booksRef.orderBy(TITLE_FIELD).addSnapshotListener { bookListSnapshot, e ->
             val bookListResponse = if (bookListSnapshot != null) {
                 val bookList = bookListSnapshot.map { bookSnapshot ->
                     bookSnapshot.toBook()
@@ -42,8 +42,8 @@ class BookListRepositoryImpl(
     override suspend fun updateBook(book: Book) = try {
         val void = book.id?.let { id ->
             booksRef.document(id).update(mapOf(
-                AUTHOR to book.author,
-                TITLE to book.title
+                AUTHOR_FIELD to book.author,
+                TITLE_FIELD to book.title
             )).await()
         }
         Response.Success(void)
@@ -60,8 +60,8 @@ class BookListRepositoryImpl(
 }
 
 fun DocumentSnapshot.toBook() = Book(
-    author = getString(AUTHOR),
-    title = getString(TITLE)
+    author = getString(AUTHOR_FIELD),
+    title = getString(TITLE_FIELD)
 ).apply {
     id = getId()
 }

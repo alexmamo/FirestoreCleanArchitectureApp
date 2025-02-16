@@ -1,14 +1,14 @@
 [versions]
-gradle = "8.8.0"
+gradle = "8.8.1"
 kotlin = "2.1.10"
-devtoolsKsp = "2.1.10-1.0.29"
+devtoolsKsp = "2.1.10-1.0.30"
 googleServices = "4.4.2"
 hiltAndroid = "2.55"
 composeBom = "2025.02.00"
 compose = "1.5.15"
 activityCompose = "1.10.0"
 viewmodelCompose = "2.8.7"
-firestore = "25.1.2"
+firebase-firestore = "25.1.2"
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradle" }
@@ -26,4 +26,4 @@ activity-compose = { module = "androidx.activity:activity-compose", version.ref 
 viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "viewmodelCompose" }
 hilt = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
-firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firestore" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", version.ref = "firebase-firestore" }
