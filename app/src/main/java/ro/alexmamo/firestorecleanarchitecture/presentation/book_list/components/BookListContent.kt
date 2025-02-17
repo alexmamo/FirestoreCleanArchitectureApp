@@ -54,9 +54,9 @@ fun BookListContent(
                     onUpdateBook = { updatedBook ->
                         updatedBook.apply {
                             if (title.equals(EMPTY_STRING)) {
-                                onUpdateBookError(BookError.EmptyTitle)
+                                onUpdateBookError(BookError.EmptyBookTitle)
                             } else if (author.equals(EMPTY_STRING)) {
-                                onUpdateBookError(BookError.EmptyAuthor)
+                                onUpdateBookError(BookError.EmptyBookAuthor)
                             } else {
                                 if (updatedBook != book) {
                                     onUpdateBook(updatedBook)

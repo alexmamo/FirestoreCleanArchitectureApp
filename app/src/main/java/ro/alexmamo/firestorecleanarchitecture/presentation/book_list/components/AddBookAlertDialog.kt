@@ -60,11 +60,11 @@ fun AddBookAlertDialog(
             ActionButton(
                 onActionButtonClick = {
                     if (title.isEmpty()) {
-                        onAddBookError(BookError.EmptyTitle)
+                        onAddBookError(BookError.EmptyBookTitle)
                         return@ActionButton
                     }
                     if (author.isEmpty()) {
-                        onAddBookError(BookError.EmptyAuthor)
+                        onAddBookError(BookError.EmptyBookAuthor)
                         return@ActionButton
                     }
                     onAddBook(Book(

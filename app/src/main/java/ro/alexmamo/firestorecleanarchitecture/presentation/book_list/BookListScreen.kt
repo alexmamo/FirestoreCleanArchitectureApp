@@ -1,5 +1,6 @@
 package ro.alexmamo.firestorecleanarchitecture.presentation.book_list
 
+import android.content.Context
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -11,7 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.LoadingIndicator
 import ro.alexmamo.firestorecleanarchitecture.core.printError
-import ro.alexmamo.firestorecleanarchitecture.core.showToastMessage
+import ro.alexmamo.firestorecleanarchitecture.core.showMessage
 import ro.alexmamo.firestorecleanarchitecture.domain.model.BookError
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 import ro.alexmamo.firestorecleanarchitecture.presentation.book_list.components.AddBookAlertDialog
@@ -55,27 +56,15 @@ fun BookListScreen(
                             viewModel.updateBook(book)
                             updatingBook = true
                         },
-                        onUpdateBookError = { error ->
-                            when(error) {
-                                BookError.EmptyTitle -> showToastMessage(
-                                    context = context,
-                                    resourceId = R.string.empty_title_message
-                                )
-                                BookError.EmptyAuthor -> showToastMessage(
-                                    context = context,
-                                    resourceId = R.string.empty_author_message
-                                )
-                            }
+                        onUpdateBookError = { bookError ->
+                            showBookErrorMessage(context, bookError)
                         },
                         onDeleteBook = { bookId ->
                             viewModel.deleteBook(bookId)
                             deletingBook = true
                         },
                         onNoUpdates = {
-                            showToastMessage(
-                                context = context,
-                                resourceId = R.string.no_updates_message
-                            )
+                            showNoBookUpdatesMessage(context)
                         }
                     )
                 }
@@ -90,17 +79,8 @@ fun BookListScreen(
                 viewModel.addBook(book)
                 addingBook = true
             },
-            onAddBookError = { error ->
-                when(error) {
-                    BookError.EmptyTitle -> showToastMessage(
-                        context = context,
-                        resourceId = R.string.empty_title_message
-                    )
-                    BookError.EmptyAuthor -> showToastMessage(
-                        context = context,
-                        resourceId = R.string.empty_author_message
-                    )
-                }
+            onAddBookError = { bookError ->
+                showBookErrorMessage(context, bookError)
             },
             onAddBookDialogCancel = {
                 openAddBookDialog = false
@@ -132,3 +112,21 @@ fun BookListScreen(
         }
     }
 }
+
+fun showBookErrorMessage(
+    context: Context,
+    bookError: BookError
+) {
+    val resourceId = when(bookError) {
+        BookError.EmptyBookTitle -> R.string.empty_book_title_message
+        BookError.EmptyBookAuthor -> R.string.empty_book_author_message
+    }
+    showMessage(context, resourceId)
+}
+
+fun showNoBookUpdatesMessage(
+    context: Context
+) = showMessage(
+    context = context,
+    resourceId = R.string.no_book_updates_message
+)

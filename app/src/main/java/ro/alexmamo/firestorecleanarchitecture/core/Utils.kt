@@ -12,7 +12,7 @@ fun printError(e: Exception?) = e?.apply {
     Log.e(TAG, "$message")
 }
 
-fun showToastMessage(
+fun showMessage(
     context: Context,
     resourceId: Int
 ) = makeText(context, context.resources.getString(resourceId), LENGTH_LONG).show()
