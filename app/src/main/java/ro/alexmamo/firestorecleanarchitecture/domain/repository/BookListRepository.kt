@@ -16,5 +16,5 @@ interface BookListRepository {
 
     suspend fun updateBook(book: Book): UpdateBookResponse
 
-    suspend fun deleteBook(id: String): DeleteBookResponse
+    suspend fun deleteBook(bookId: String): DeleteBookResponse
 }

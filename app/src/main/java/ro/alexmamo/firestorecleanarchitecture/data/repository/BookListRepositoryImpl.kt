@@ -33,15 +33,15 @@ class BookListRepositoryImpl(
     }
 
     override suspend fun addBook(book: Book) = try {
-        val id = booksRef.add(book).await().id
-        Response.Success(id)
+        val bookId = booksRef.add(book).await().id
+        Response.Success(bookId)
     } catch (e: Exception) {
         Response.Failure(e)
     }
 
     override suspend fun updateBook(book: Book) = try {
-        val void = book.id?.let { id ->
-            booksRef.document(id).update(mapOf(
+        val void = book.id?.let { bookId ->
+            booksRef.document(bookId).update(mapOf(
                 AUTHOR_FIELD to book.author,
                 TITLE_FIELD to book.title
             )).await()
@@ -51,8 +51,8 @@ class BookListRepositoryImpl(
         Response.Failure(e)
     }
 
-    override suspend fun deleteBook(id: String) = try {
-        val void = booksRef.document(id).delete().await()
+    override suspend fun deleteBook(bookId: String) = try {
+        val void = booksRef.document(bookId).delete().await()
         Response.Success(void)
     } catch (e: Exception) {
         Response.Failure(e)

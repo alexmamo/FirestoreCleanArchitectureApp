@@ -47,7 +47,7 @@ class BookListViewModel @Inject constructor(
         updateBookResponse = repo.updateBook(book)
     }
 
-    fun deleteBook(id: String) = viewModelScope.launch {
-        deleteBookResponse = repo.deleteBook(id)
+    fun deleteBook(bookId: String) = viewModelScope.launch {
+        deleteBookResponse = repo.deleteBook(bookId)
     }
 }

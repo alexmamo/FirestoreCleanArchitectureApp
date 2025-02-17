@@ -12,6 +12,7 @@ import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.LoadingIndicator
 import ro.alexmamo.firestorecleanarchitecture.core.printError
 import ro.alexmamo.firestorecleanarchitecture.core.showToastMessage
+import ro.alexmamo.firestorecleanarchitecture.domain.model.BookError
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 import ro.alexmamo.firestorecleanarchitecture.presentation.book_list.components.AddBookAlertDialog
 import ro.alexmamo.firestorecleanarchitecture.presentation.book_list.components.AddBookFloatingActionButton
@@ -54,18 +55,27 @@ fun BookListScreen(
                             viewModel.updateBook(book)
                             updatingBook = true
                         },
-                        onEmptyTitleUpdate = {
-                            showToastMessage(context, R.string.empty_title_message)
+                        onUpdateBookError = { error ->
+                            when(error) {
+                                BookError.EmptyTitle -> showToastMessage(
+                                    context = context,
+                                    resourceId = R.string.empty_title_message
+                                )
+                                BookError.EmptyAuthor -> showToastMessage(
+                                    context = context,
+                                    resourceId = R.string.empty_author_message
+                                )
+                            }
                         },
-                        onEmptyAuthorUpdate = {
-                            showToastMessage(context, R.string.empty_author_message)
+                        onDeleteBook = { bookId ->
+                            viewModel.deleteBook(bookId)
+                            deletingBook = true
                         },
                         onNoUpdates = {
-                            showToastMessage(context, R.string.no_updates_message)
-                        },
-                        onDeleteBook = { id ->
-                            viewModel.deleteBook(id)
-                            deletingBook = true
+                            showToastMessage(
+                                context = context,
+                                resourceId = R.string.no_updates_message
+                            )
                         }
                     )
                 }
@@ -76,15 +86,21 @@ fun BookListScreen(
 
     if (openAddBookDialog) {
         AddBookAlertDialog(
-            onEmptyTitleInsert = {
-                showToastMessage(context, R.string.empty_title_message)
-            },
-            onEmptyAuthorInsert = {
-                showToastMessage(context, R.string.empty_author_message)
-            },
             onAddBook = { book ->
                 viewModel.addBook(book)
                 addingBook = true
+            },
+            onAddBookError = { error ->
+                when(error) {
+                    BookError.EmptyTitle -> showToastMessage(
+                        context = context,
+                        resourceId = R.string.empty_title_message
+                    )
+                    BookError.EmptyAuthor -> showToastMessage(
+                        context = context,
+                        resourceId = R.string.empty_author_message
+                    )
+                }
             },
             onAddBookDialogCancel = {
                 openAddBookDialog = false

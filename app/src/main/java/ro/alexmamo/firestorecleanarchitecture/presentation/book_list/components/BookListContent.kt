@@ -13,6 +13,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import ro.alexmamo.firestorecleanarchitecture.core.EMPTY_STRING
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
+import ro.alexmamo.firestorecleanarchitecture.domain.model.BookError
 
 const val NON_EXISTENT_BOOK_ID = "NO_ID"
 
@@ -21,8 +22,7 @@ fun BookListContent(
     innerPadding: PaddingValues,
     bookList: List<Book>,
     onUpdateBook: (Book) -> Unit,
-    onEmptyTitleUpdate: () -> Unit,
-    onEmptyAuthorUpdate: () -> Unit,
+    onUpdateBookError: (BookError) -> Unit,
     onNoUpdates: () -> Unit,
     onDeleteBook: (String) -> Unit
 ) {
@@ -54,9 +54,9 @@ fun BookListContent(
                     onUpdateBook = { updatedBook ->
                         updatedBook.apply {
                             if (title.equals(EMPTY_STRING)) {
-                                onEmptyTitleUpdate()
+                                onUpdateBookError(BookError.EmptyTitle)
                             } else if (author.equals(EMPTY_STRING)) {
-                                onEmptyAuthorUpdate()
+                                onUpdateBookError(BookError.EmptyAuthor)
                             } else {
                                 if (updatedBook != book) {
                                     onUpdateBook(updatedBook)

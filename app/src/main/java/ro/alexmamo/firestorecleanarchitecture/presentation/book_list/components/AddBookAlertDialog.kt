@@ -17,13 +17,13 @@ import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.ActionButton
 import ro.alexmamo.firestorecleanarchitecture.core.EMPTY_STRING
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
+import ro.alexmamo.firestorecleanarchitecture.domain.model.BookError
 
 @Composable
 fun AddBookAlertDialog(
-    onEmptyTitleInsert: () -> Unit,
-    onEmptyAuthorInsert: () -> Unit,
     onAddBook: (book: Book) -> Unit,
-    onAddBookDialogCancel: () -> Unit,
+    onAddBookError: (BookError) -> Unit,
+    onAddBookDialogCancel: () -> Unit
 ) {
     var title by remember { mutableStateOf(EMPTY_STRING) }
     var author by remember { mutableStateOf(EMPTY_STRING) }
@@ -60,11 +60,11 @@ fun AddBookAlertDialog(
             ActionButton(
                 onActionButtonClick = {
                     if (title.isEmpty()) {
-                        onEmptyTitleInsert()
+                        onAddBookError(BookError.EmptyTitle)
                         return@ActionButton
                     }
                     if (author.isEmpty()) {
-                        onEmptyAuthorInsert()
+                        onAddBookError(BookError.EmptyAuthor)
                         return@ActionButton
                     }
                     onAddBook(Book(
