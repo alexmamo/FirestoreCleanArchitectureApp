@@ -1,14 +1,13 @@
 package ro.alexmamo.firestorecleanarchitecture.presentation.book_list
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Response.Loading
+import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.AddBookResponse
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BookListRepository
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BookListResponse
@@ -20,14 +19,17 @@ import javax.inject.Inject
 class BookListViewModel @Inject constructor(
     private val repo: BookListRepository
 ): ViewModel() {
-    var bookListResponse by mutableStateOf<BookListResponse>(Loading)
-        private set
-    var addBookResponse by mutableStateOf<AddBookResponse>(Loading)
-        private set
-    var updateBookResponse by mutableStateOf<UpdateBookResponse>(Loading)
-        private set
-    var deleteBookResponse by mutableStateOf<DeleteBookResponse>(Loading)
-        private set
+    private val _bookListResponse = MutableStateFlow<BookListResponse>(Response.Loading)
+    val bookListResponse: StateFlow<BookListResponse> = _bookListResponse.asStateFlow()
+
+    private val _addBookResponse = MutableStateFlow<AddBookResponse?>(null)
+    val addBookResponse: StateFlow<AddBookResponse?> = _addBookResponse.asStateFlow()
+
+    private val _updateBookResponse = MutableStateFlow<UpdateBookResponse?>(null)
+    val updateBookResponse: StateFlow<UpdateBookResponse?> = _updateBookResponse.asStateFlow()
+
+    private val _deleteBookResponse = MutableStateFlow<DeleteBookResponse?>(null)
+    val deleteBookResponse: StateFlow<DeleteBookResponse?> = _deleteBookResponse.asStateFlow()
 
     init {
         getBookList()
@@ -35,19 +37,22 @@ class BookListViewModel @Inject constructor(
 
     private fun getBookList() = viewModelScope.launch {
         repo.getBookList().collect { response ->
-            bookListResponse = response
+            _bookListResponse.value = response
         }
     }
 
-    fun addBook(book: Book) = viewModelScope.launch {
-        addBookResponse = repo.addBook(book)
+    fun addBook(book: Map<String, String>) = viewModelScope.launch {
+        _addBookResponse.value = Response.Loading
+        _addBookResponse.value = repo.addBook(book)
     }
 
-    fun updateBook(book: Book) = viewModelScope.launch {
-        updateBookResponse = repo.updateBook(book)
+    fun updateBook(bookUpdates: Map<String, String>) = viewModelScope.launch {
+        _updateBookResponse.value = Response.Loading
+        _updateBookResponse.value = repo.updateBook(bookUpdates)
     }
 
     fun deleteBook(bookId: String) = viewModelScope.launch {
-        deleteBookResponse = repo.deleteBook(bookId)
+        _deleteBookResponse.value = Response.Loading
+        _deleteBookResponse.value = repo.deleteBook(bookId)
     }
 }

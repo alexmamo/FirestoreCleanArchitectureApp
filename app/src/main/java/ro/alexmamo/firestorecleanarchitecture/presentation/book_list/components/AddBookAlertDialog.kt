@@ -15,14 +15,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.ActionButton
-import ro.alexmamo.firestorecleanarchitecture.core.EMPTY_STRING
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
-import ro.alexmamo.firestorecleanarchitecture.domain.model.BookError
+import ro.alexmamo.firestorecleanarchitecture.core.AUTHOR_FIELD
+import ro.alexmamo.firestorecleanarchitecture.core.TITLE_FIELD
+import kotlin.String
+
+const val EMPTY_STRING = ""
 
 @Composable
 fun AddBookAlertDialog(
-    onAddBook: (book: Book) -> Unit,
-    onAddBookError: (BookError) -> Unit,
+    onAddBook: (book: Map<String, String>) -> Unit,
+    onEmptyBookField: (String) -> Unit,
     onAddBookDialogCancel: () -> Unit
 ) {
     var title by remember { mutableStateOf(EMPTY_STRING) }
@@ -60,17 +62,18 @@ fun AddBookAlertDialog(
             ActionButton(
                 onActionButtonClick = {
                     if (title.isEmpty()) {
-                        onAddBookError(BookError.EmptyBookTitle)
+                        onEmptyBookField(TITLE_FIELD)
                         return@ActionButton
                     }
                     if (author.isEmpty()) {
-                        onAddBookError(BookError.EmptyBookAuthor)
+                        onEmptyBookField(AUTHOR_FIELD)
                         return@ActionButton
                     }
-                    onAddBook(Book(
-                        title = title,
-                        author = author
-                    ))
+                    val book = mapOf<String, String>(
+                        AUTHOR_FIELD to author,
+                        TITLE_FIELD to title
+                    )
+                    onAddBook(book)
                     onAddBookDialogCancel()
                 },
                 resourceId = R.string.add_button

@@ -11,9 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import ro.alexmamo.firestorecleanarchitecture.core.EMPTY_STRING
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
-import ro.alexmamo.firestorecleanarchitecture.domain.model.BookError
 
 const val NON_EXISTENT_BOOK_ID = "NO_ID"
 
@@ -21,8 +19,8 @@ const val NON_EXISTENT_BOOK_ID = "NO_ID"
 fun BookListContent(
     innerPadding: PaddingValues,
     bookList: List<Book>,
-    onUpdateBook: (Book) -> Unit,
-    onUpdateBookError: (BookError) -> Unit,
+    onUpdateBook: (Map<String, String>) -> Unit,
+    onEmptyBookField: (String) -> Unit,
     onNoUpdates: () -> Unit,
     onDeleteBook: (String) -> Unit
 ) {
@@ -34,38 +32,31 @@ fun BookListContent(
         items(
             items = bookList,
             key = { book ->
-                book.id.orEmpty()
+                book.id
             }
         ) { book ->
             if (editBookId != book.id) {
                 BookCard(
                     book = book,
                     onEditBook = {
-                        editBookId = book.id.orEmpty()
+                        editBookId = book.id
                     },
                     onDeleteBook = {
-                        onDeleteBook(book.id.orEmpty())
+                        onDeleteBook(book.id)
                         editBookId = NON_EXISTENT_BOOK_ID
                     }
                 )
             } else {
                 EditableBookCard(
                     book = book,
-                    onUpdateBook = { updatedBook ->
-                        updatedBook.apply {
-                            if (title.equals(EMPTY_STRING)) {
-                                onUpdateBookError(BookError.EmptyBookTitle)
-                            } else if (author.equals(EMPTY_STRING)) {
-                                onUpdateBookError(BookError.EmptyBookAuthor)
-                            } else {
-                                if (updatedBook != book) {
-                                    onUpdateBook(updatedBook)
-                                } else {
-                                    onNoUpdates()
-                                }
-                                editBookId = NON_EXISTENT_BOOK_ID
-                            }
-                        }
+                    onUpdateBook = { bookUpdates ->
+                        onUpdateBook(bookUpdates)
+                        editBookId = NON_EXISTENT_BOOK_ID
+                    },
+                    onEmptyBookField = onEmptyBookField,
+                    onNoUpdates = {
+                        onNoUpdates()
+                        editBookId = NON_EXISTENT_BOOK_ID
                     },
                     onCancel = {
                         editBookId = NON_EXISTENT_BOOK_ID

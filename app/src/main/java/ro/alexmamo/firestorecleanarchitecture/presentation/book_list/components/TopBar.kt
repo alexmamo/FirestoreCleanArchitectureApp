@@ -7,12 +7,12 @@ import androidx.compose.ui.res.stringResource
 import ro.alexmamo.firestorecleanarchitecture.R
 
 @Composable
-fun BookListTopBar() {
+fun TopBar() {
     TopAppBar (
         title = {
             Text(
                 text = stringResource(
-                    id = R.string.book_list_screen_title
+                    id = R.string.app_name
                 )
             )
         }

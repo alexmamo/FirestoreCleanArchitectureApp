@@ -18,15 +18,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.ActionButton
+import ro.alexmamo.firestorecleanarchitecture.core.AUTHOR_FIELD
+import ro.alexmamo.firestorecleanarchitecture.core.ID_FIELD
+import ro.alexmamo.firestorecleanarchitecture.core.NO_BOOK_AUTHOR
+import ro.alexmamo.firestorecleanarchitecture.core.NO_BOOK_TITLE
+import ro.alexmamo.firestorecleanarchitecture.core.TITLE_FIELD
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 
 @Composable
 fun EditableBookCard(
     book: Book,
-    onUpdateBook: (Book) -> Unit,
+    onUpdateBook: (Map<String, String>) -> Unit,
+    onEmptyBookField: (String) -> Unit,
+    onNoUpdates: () -> Unit,
     onCancel: () -> Unit
 ) {
-    var updatedBook by remember { mutableStateOf(book) }
+    var title by remember { mutableStateOf(book.title ?: NO_BOOK_TITLE) }
+    var author by remember { mutableStateOf(book.author ?: NO_BOOK_AUTHOR) }
 
     Card(
         modifier = Modifier.fillMaxWidth().padding(
@@ -42,22 +50,18 @@ fun EditableBookCard(
             modifier = Modifier.padding(8.dp)
         ) {
             TitleTextField(
-                title = updatedBook.title.orEmpty(),
+                title = title,
                 onUpdateTitle = { newTitle ->
-                    updatedBook = updatedBook.copy(
-                        title = newTitle
-                    )
+                    title = newTitle
                 }
             )
             Spacer(
                 modifier = Modifier.height(8.dp)
             )
             AuthorTextField(
-                author = updatedBook.author.orEmpty(),
+                author = author,
                 onUpdateAuthor = { newAuthor ->
-                    updatedBook = updatedBook.copy(
-                        author = newAuthor
-                    )
+                    author = newAuthor
                 }
             )
             Row {
@@ -70,7 +74,25 @@ fun EditableBookCard(
                 )
                 ActionButton(
                     onActionButtonClick = {
-                        onUpdateBook(updatedBook)
+                        if (title.isEmpty()) {
+                            onEmptyBookField(TITLE_FIELD)
+                        } else if (author.isEmpty()) {
+                            onEmptyBookField(AUTHOR_FIELD)
+                        } else {
+                            val bookUpdates = mutableMapOf<String, String>()
+                            if (book.title != title) {
+                                bookUpdates[TITLE_FIELD] = title
+                            }
+                            if (book.author != author) {
+                                bookUpdates[AUTHOR_FIELD] = author
+                            }
+                            if (bookUpdates.isNotEmpty()) {
+                                bookUpdates[ID_FIELD] = book.id
+                                onUpdateBook(bookUpdates)
+                            } else {
+                                onNoUpdates()
+                            }
+                        }
                     },
                     resourceId = R.string.update_button
                 )

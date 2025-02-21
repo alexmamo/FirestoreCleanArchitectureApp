@@ -5,6 +5,6 @@ import com.google.firebase.firestore.Exclude
 data class Book(
     val author: String? = null,
     @get:Exclude
-    var id: String? = null,
+    var id: String,
     val title: String? = null
 )

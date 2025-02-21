@@ -15,6 +15,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.ActionIconButton
+import ro.alexmamo.firestorecleanarchitecture.core.NO_BOOK_AUTHOR
+import ro.alexmamo.firestorecleanarchitecture.core.NO_BOOK_TITLE
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 
 @Composable
@@ -38,10 +40,10 @@ fun BookCard(
         ) {
             Column {
                 TitleText(
-                    title = book.title.orEmpty()
+                    title = book.title ?: NO_BOOK_TITLE
                 )
                 AuthorText(
-                    author = book.author.orEmpty()
+                    author = book.author ?: NO_BOOK_AUTHOR
                 )
             }
             Spacer(

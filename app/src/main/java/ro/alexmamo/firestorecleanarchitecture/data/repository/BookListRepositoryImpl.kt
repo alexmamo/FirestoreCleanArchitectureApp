@@ -5,12 +5,12 @@ import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.tasks.await
+import ro.alexmamo.firestorecleanarchitecture.core.AUTHOR_FIELD
+import ro.alexmamo.firestorecleanarchitecture.core.ID_FIELD
+import ro.alexmamo.firestorecleanarchitecture.core.TITLE_FIELD
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.domain.model.Response
 import ro.alexmamo.firestorecleanarchitecture.domain.repository.BookListRepository
-
-const val AUTHOR_FIELD = "author"
-const val TITLE_FIELD = "title"
 
 class BookListRepositoryImpl(
     private val booksRef: CollectionReference
@@ -32,28 +32,24 @@ class BookListRepositoryImpl(
         }
     }
 
-    override suspend fun addBook(book: Book) = try {
-        val bookId = booksRef.add(book).await().id
-        Response.Success(bookId)
+    override suspend fun addBook(book: Map<String, String>) = try {
+        booksRef.add(book).await()
+        Response.Success(Unit)
     } catch (e: Exception) {
         Response.Failure(e)
     }
 
-    override suspend fun updateBook(book: Book) = try {
-        val void = book.id?.let { bookId ->
-            booksRef.document(bookId).update(mapOf(
-                AUTHOR_FIELD to book.author,
-                TITLE_FIELD to book.title
-            )).await()
-        }
-        Response.Success(void)
+    override suspend fun updateBook(bookUpdates: Map<String, String>) = try {
+        val bookId = bookUpdates.getValue(ID_FIELD)
+        booksRef.document(bookId).update(bookUpdates).await()
+        Response.Success(Unit)
     } catch (e: Exception) {
         Response.Failure(e)
     }
 
     override suspend fun deleteBook(bookId: String) = try {
-        val void = booksRef.document(bookId).delete().await()
-        Response.Success(void)
+        booksRef.document(bookId).delete().await()
+        Response.Success(Unit)
     } catch (e: Exception) {
         Response.Failure(e)
     }
@@ -61,7 +57,6 @@ class BookListRepositoryImpl(
 
 fun DocumentSnapshot.toBook() = Book(
     author = getString(AUTHOR_FIELD),
+    id = id,
     title = getString(TITLE_FIELD)
-).apply {
-    id = getId()
-}
+)
