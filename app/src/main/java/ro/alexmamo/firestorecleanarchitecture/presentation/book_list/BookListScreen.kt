@@ -125,6 +125,7 @@ fun BookListScreen(
                 snackbarHostState = snackbarHostState,
                 message = resources.getString(R.string.book_state_message, ADDED_STATE)
             )
+            viewModel.resetAddBookState()
         }
         is Response.Failure -> addBookResponse.e?.message?.let { errorMessage ->
             LaunchedEffect(errorMessage) {
@@ -143,6 +144,7 @@ fun BookListScreen(
                 snackbarHostState = snackbarHostState,
                 message = resources.getString(R.string.book_state_message, UPDATED_STATE)
             )
+            viewModel.resetUpdateBookState()
         }
         is Response.Failure -> updateBookResponse.e?.message?.let { errorMessage ->
             LaunchedEffect(errorMessage) {
@@ -161,6 +163,7 @@ fun BookListScreen(
                 snackbarHostState = snackbarHostState,
                 message = resources.getString(R.string.book_state_message, DELETED_STATE)
             )
+            viewModel.resetDeleteBookState()
         }
         is Response.Failure -> deleteBookResponse.e?.message?.let { errorMessage ->
             LaunchedEffect(errorMessage) {

@@ -13,7 +13,6 @@
     <string name="delete_icon">Delete</string>
     <!--Content Descriptions-->
     <string name="open_add_book_dialog">"Open add book dialog."</string>
-    <string name="navigate_back">Navigate back</string>
     <!--Placeholders-->
     <string name="book_title">"Type a book title…"</string>
     <string name="book_author">"Type a book author…"</string>

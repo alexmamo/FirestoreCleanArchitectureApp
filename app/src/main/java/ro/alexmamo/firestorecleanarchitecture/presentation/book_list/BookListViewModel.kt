@@ -46,13 +46,25 @@ class BookListViewModel @Inject constructor(
         _addBookResponse.value = repo.addBook(book)
     }
 
+    fun resetAddBookState() = _addBookResponse.value?.let {
+        _addBookResponse.value = null
+    }
+
     fun updateBook(bookUpdates: Map<String, String>) = viewModelScope.launch {
         _updateBookResponse.value = Response.Loading
         _updateBookResponse.value = repo.updateBook(bookUpdates)
     }
 
+    fun resetUpdateBookState() = _updateBookResponse.value?.let {
+        _updateBookResponse.value = null
+    }
+
     fun deleteBook(bookId: String) = viewModelScope.launch {
         _deleteBookResponse.value = Response.Loading
         _deleteBookResponse.value = repo.deleteBook(bookId)
+    }
+
+    fun resetDeleteBookState() = _deleteBookResponse.value?.let {
+        _deleteBookResponse.value = null
     }
 }

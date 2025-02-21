@@ -14,7 +14,7 @@ import ro.alexmamo.firestorecleanarchitecture.R
 
 @Composable
 fun EmptyBookListContent(
-    innerPadding: PaddingValues,
+    innerPadding: PaddingValues
 ) {
     Box(
         modifier = Modifier.fillMaxSize().padding(innerPadding),
