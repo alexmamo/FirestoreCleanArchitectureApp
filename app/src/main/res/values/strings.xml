@@ -19,5 +19,5 @@
     <!--Messages-->
     <string name="empty_book_field_message">"Book %1$s cannot be empty."</string>
     <string name="no_book_updates_message">"No book updates performed."</string>
-    <string name="book_state_message">"Book successfully %1$s."</string>
+    <string name="book_action_message">"Book successfully %1$s."</string>
 </resources>

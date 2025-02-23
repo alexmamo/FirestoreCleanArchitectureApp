@@ -19,17 +19,17 @@ import javax.inject.Inject
 class BookListViewModel @Inject constructor(
     private val repo: BookListRepository
 ): ViewModel() {
-    private val _bookListResponse = MutableStateFlow<BookListResponse>(Response.Loading)
-    val bookListResponse: StateFlow<BookListResponse> = _bookListResponse.asStateFlow()
+    private val _bookListState = MutableStateFlow<BookListResponse>(Response.Loading)
+    val bookListState: StateFlow<BookListResponse> = _bookListState.asStateFlow()
 
-    private val _addBookResponse = MutableStateFlow<AddBookResponse?>(null)
-    val addBookResponse: StateFlow<AddBookResponse?> = _addBookResponse.asStateFlow()
+    private val _addBookState = MutableStateFlow<AddBookResponse>(Response.Idle)
+    val addBookState: StateFlow<AddBookResponse> = _addBookState.asStateFlow()
 
-    private val _updateBookResponse = MutableStateFlow<UpdateBookResponse?>(null)
-    val updateBookResponse: StateFlow<UpdateBookResponse?> = _updateBookResponse.asStateFlow()
+    private val _updateBookState = MutableStateFlow<UpdateBookResponse>(Response.Idle)
+    val updateBookState: StateFlow<UpdateBookResponse> = _updateBookState.asStateFlow()
 
-    private val _deleteBookResponse = MutableStateFlow<DeleteBookResponse?>(null)
-    val deleteBookResponse: StateFlow<DeleteBookResponse?> = _deleteBookResponse.asStateFlow()
+    private val _deleteBookState = MutableStateFlow<DeleteBookResponse>(Response.Idle)
+    val deleteBookState: StateFlow<DeleteBookResponse> = _deleteBookState.asStateFlow()
 
     init {
         getBookList()
@@ -37,34 +37,34 @@ class BookListViewModel @Inject constructor(
 
     private fun getBookList() = viewModelScope.launch {
         repo.getBookList().collect { response ->
-            _bookListResponse.value = response
+            _bookListState.value = response
         }
     }
 
     fun addBook(book: Map<String, String>) = viewModelScope.launch {
-        _addBookResponse.value = Response.Loading
-        _addBookResponse.value = repo.addBook(book)
+        _addBookState.value = Response.Loading
+        _addBookState.value = repo.addBook(book)
     }
 
-    fun resetAddBookState() = _addBookResponse.value?.let {
-        _addBookResponse.value = null
+    fun resetAddBookState() {
+        _addBookState.value = Response.Idle
     }
 
     fun updateBook(bookUpdates: Map<String, String>) = viewModelScope.launch {
-        _updateBookResponse.value = Response.Loading
-        _updateBookResponse.value = repo.updateBook(bookUpdates)
+        _updateBookState.value = Response.Loading
+        _updateBookState.value = repo.updateBook(bookUpdates)
     }
 
-    fun resetUpdateBookState() = _updateBookResponse.value?.let {
-        _updateBookResponse.value = null
+    fun resetUpdateBookState() {
+        _updateBookState.value = Response.Idle
     }
 
     fun deleteBook(bookId: String) = viewModelScope.launch {
-        _deleteBookResponse.value = Response.Loading
-        _deleteBookResponse.value = repo.deleteBook(bookId)
+        _deleteBookState.value = Response.Loading
+        _deleteBookState.value = repo.deleteBook(bookId)
     }
 
-    fun resetDeleteBookState() = _deleteBookResponse.value?.let {
-        _deleteBookResponse.value = null
+    fun resetDeleteBookState() {
+        _deleteBookState.value = Response.Idle
     }
 }
