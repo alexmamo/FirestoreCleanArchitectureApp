@@ -10,32 +10,23 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.ActionButton
-import ro.alexmamo.firestorecleanarchitecture.core.AUTHOR_FIELD
-import ro.alexmamo.firestorecleanarchitecture.core.ID_FIELD
-import ro.alexmamo.firestorecleanarchitecture.core.NO_BOOK_AUTHOR
-import ro.alexmamo.firestorecleanarchitecture.core.NO_BOOK_TITLE
-import ro.alexmamo.firestorecleanarchitecture.core.TITLE_FIELD
-import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
+import ro.alexmamo.firestorecleanarchitecture.presentation.book_list.BookField
 
 @Composable
 fun EditableBookCard(
-    book: Book,
-    onUpdateBook: (Map<String, String>) -> Unit,
-    onEmptyBookField: (String) -> Unit,
-    onNoBookUpdates: () -> Unit,
+    title: TextFieldValue,
+    onTitleToUpdateChange: (TextFieldValue) -> Unit,
+    author: TextFieldValue,
+    onAuthorToUpdateChange: (TextFieldValue) -> Unit,
+    onUpdateBook: (String, String) -> Unit,
+    onInvalidBookField: (BookField) -> Unit,
     onCancel: () -> Unit
 ) {
-    var title by remember { mutableStateOf(book.title ?: NO_BOOK_TITLE) }
-    var author by remember { mutableStateOf(book.author ?: NO_BOOK_AUTHOR) }
-
     Card(
         modifier = Modifier.fillMaxWidth().padding(
             start = 8.dp,
@@ -51,18 +42,14 @@ fun EditableBookCard(
         ) {
             TitleTextField(
                 title = title,
-                onUpdateTitle = { newTitle ->
-                    title = newTitle
-                }
+                onTitleChange = onTitleToUpdateChange
             )
             Spacer(
                 modifier = Modifier.height(8.dp)
             )
             AuthorTextField(
                 author = author,
-                onUpdateAuthor = { newAuthor ->
-                    author = newAuthor
-                }
+                onAuthorChange = onAuthorToUpdateChange
             )
             Row {
                 ActionButton(
@@ -74,24 +61,14 @@ fun EditableBookCard(
                 )
                 ActionButton(
                     onActionButtonClick = {
-                        if (title.isEmpty()) {
-                            onEmptyBookField(TITLE_FIELD)
-                        } else if (author.isEmpty()) {
-                            onEmptyBookField(AUTHOR_FIELD)
+                        val isTitleValid = title.text.isNotBlank()
+                        val isAuthorValid = author.text.isNotBlank()
+                        if (!isTitleValid) {
+                            onInvalidBookField(BookField.TITLE)
+                        } else if (!isAuthorValid) {
+                            onInvalidBookField(BookField.AUTHOR)
                         } else {
-                            val bookUpdates = mutableMapOf<String, String>()
-                            if (book.title != title) {
-                                bookUpdates[TITLE_FIELD] = title
-                            }
-                            if (book.author != author) {
-                                bookUpdates[AUTHOR_FIELD] = author
-                            }
-                            if (bookUpdates.isNotEmpty()) {
-                                bookUpdates[ID_FIELD] = book.id
-                                onUpdateBook(bookUpdates)
-                            } else {
-                                onNoBookUpdates()
-                            }
+                            onUpdateBook(title.text, author.text)
                         }
                     },
                     resourceId = R.string.update_button

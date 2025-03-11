@@ -6,30 +6,29 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.ActionButton
 import ro.alexmamo.firestorecleanarchitecture.core.AUTHOR_FIELD
 import ro.alexmamo.firestorecleanarchitecture.core.TITLE_FIELD
+import ro.alexmamo.firestorecleanarchitecture.presentation.book_list.BookField
 import kotlin.String
 
 const val EMPTY_STRING = ""
 
 @Composable
 fun AddBookAlertDialog(
+    title: TextFieldValue,
+    onTitleChange: (TextFieldValue) -> Unit,
+    author: TextFieldValue,
+    onAuthorChange: (TextFieldValue) -> Unit,
     onAddBook: (book: Map<String, String>) -> Unit,
-    onEmptyBookField: (String) -> Unit,
+    onInvalidBookField: (BookField) -> Unit,
     onAddBookDialogCancel: () -> Unit
 ) {
-    var title by remember { mutableStateOf(EMPTY_STRING) }
-    var author by remember { mutableStateOf(EMPTY_STRING) }
-
     AlertDialog(
         onDismissRequest = onAddBookDialogCancel,
         title = {
@@ -43,35 +42,33 @@ fun AddBookAlertDialog(
             Column {
                 TitleTextField(
                     title = title,
-                    onUpdateTitle = { newTitle ->
-                        title = newTitle
-                    }
+                    onTitleChange = onTitleChange
                 )
                 Spacer(
                     modifier = Modifier.height(16.dp)
                 )
                 AuthorTextField(
                     author = author,
-                    onUpdateAuthor = { newAuthor ->
-                        author = newAuthor
-                    }
+                    onAuthorChange = onAuthorChange
                 )
             }
         },
         confirmButton = {
             ActionButton(
                 onActionButtonClick = {
-                    if (title.isEmpty()) {
-                        onEmptyBookField(TITLE_FIELD)
+                    val isTitleValid = title.text.isNotBlank()
+                    val isAuthorValid = author.text.isNotBlank()
+                    if (!isTitleValid) {
+                        onInvalidBookField(BookField.TITLE)
                         return@ActionButton
                     }
-                    if (author.isEmpty()) {
-                        onEmptyBookField(AUTHOR_FIELD)
+                    if (!isAuthorValid) {
+                        onInvalidBookField(BookField.AUTHOR)
                         return@ActionButton
                     }
                     val book = mapOf<String, String>(
-                        AUTHOR_FIELD to author,
-                        TITLE_FIELD to title
+                        AUTHOR_FIELD to author.text,
+                        TITLE_FIELD to title.text
                     )
                     onAddBook(book)
                     onAddBookDialogCancel()
