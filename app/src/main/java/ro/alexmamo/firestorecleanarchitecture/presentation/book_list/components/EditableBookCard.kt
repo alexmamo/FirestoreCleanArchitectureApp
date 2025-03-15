@@ -10,23 +10,37 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import ro.alexmamo.firestorecleanarchitecture.R
 import ro.alexmamo.firestorecleanarchitecture.components.ActionButton
+import ro.alexmamo.firestorecleanarchitecture.domain.model.Book
 import ro.alexmamo.firestorecleanarchitecture.presentation.book_list.BookField
 
 @Composable
 fun EditableBookCard(
-    title: TextFieldValue,
-    onTitleToUpdateChange: (TextFieldValue) -> Unit,
-    author: TextFieldValue,
-    onAuthorToUpdateChange: (TextFieldValue) -> Unit,
+    book: Book,
     onUpdateBook: (String, String) -> Unit,
     onInvalidBookField: (BookField) -> Unit,
     onCancel: () -> Unit
 ) {
+    val bookTitle = book.title ?: EMPTY_STRING
+    var title by remember { mutableStateOf(TextFieldValue(
+        text = bookTitle,
+        selection = TextRange(bookTitle.length)
+    )) }
+    val authorTitle = book.author ?: EMPTY_STRING
+    var author by remember { mutableStateOf(TextFieldValue(
+        text = authorTitle,
+        selection = TextRange(authorTitle.length)
+    )) }
+
     Card(
         modifier = Modifier.fillMaxWidth().padding(
             start = 8.dp,
@@ -42,14 +56,18 @@ fun EditableBookCard(
         ) {
             TitleTextField(
                 title = title,
-                onTitleChange = onTitleToUpdateChange
+                onTitleChange = { newTitle ->
+                    title = newTitle
+                }
             )
             Spacer(
                 modifier = Modifier.height(8.dp)
             )
             AuthorTextField(
                 author = author,
-                onAuthorChange = onAuthorToUpdateChange
+                onAuthorChange = { newAuthor ->
+                    author = newAuthor
+                }
             )
             Row {
                 ActionButton(

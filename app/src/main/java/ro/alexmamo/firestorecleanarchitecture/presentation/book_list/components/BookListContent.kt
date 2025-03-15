@@ -11,7 +11,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.input.TextFieldValue
 import ro.alexmamo.firestorecleanarchitecture.core.AUTHOR_FIELD
 import ro.alexmamo.firestorecleanarchitecture.core.ID_FIELD
 import ro.alexmamo.firestorecleanarchitecture.core.TITLE_FIELD
@@ -24,11 +23,6 @@ const val NON_EXISTENT_BOOK_ID = "NO_ID"
 fun BookListContent(
     innerPadding: PaddingValues,
     bookList: List<Book>,
-    onEditBook: (String, String) -> Unit,
-    title: TextFieldValue,
-    onTitleToUpdateChange: (TextFieldValue) -> Unit,
-    author: TextFieldValue,
-    onAuthorToUpdateChange: (TextFieldValue) -> Unit,
     onUpdateBook: (Map<String, String>) -> Unit,
     onInvalidBookField: (BookField) -> Unit,
     onDeleteBook: (String) -> Unit
@@ -49,9 +43,6 @@ fun BookListContent(
                     book = book,
                     onEditBook = {
                         editBookId = book.id
-                        val editBookTitle = book.title ?: EMPTY_STRING
-                        val editBookAuthor = book.author ?: EMPTY_STRING
-                        onEditBook(editBookTitle, editBookAuthor)
                     },
                     onDeleteBook = {
                         onDeleteBook(book.id)
@@ -60,10 +51,7 @@ fun BookListContent(
                 )
             } else {
                 EditableBookCard(
-                    title = title,
-                    onTitleToUpdateChange = onTitleToUpdateChange,
-                    author = author,
-                    onAuthorToUpdateChange = onAuthorToUpdateChange,
+                    book = book,
                     onUpdateBook = { title, author ->
                         val bookUpdates = mutableMapOf<String, String>()
                         if (book.title != title) {

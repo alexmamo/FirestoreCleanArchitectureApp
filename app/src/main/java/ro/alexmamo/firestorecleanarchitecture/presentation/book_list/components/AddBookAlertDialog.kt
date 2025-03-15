@@ -6,6 +6,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -21,14 +25,13 @@ const val EMPTY_STRING = ""
 
 @Composable
 fun AddBookAlertDialog(
-    title: TextFieldValue,
-    onTitleChange: (TextFieldValue) -> Unit,
-    author: TextFieldValue,
-    onAuthorChange: (TextFieldValue) -> Unit,
     onAddBook: (book: Map<String, String>) -> Unit,
     onInvalidBookField: (BookField) -> Unit,
     onAddBookDialogCancel: () -> Unit
 ) {
+    var title by remember { mutableStateOf(TextFieldValue(EMPTY_STRING)) }
+    var author by remember { mutableStateOf(TextFieldValue(EMPTY_STRING)) }
+
     AlertDialog(
         onDismissRequest = onAddBookDialogCancel,
         title = {
@@ -42,14 +45,18 @@ fun AddBookAlertDialog(
             Column {
                 TitleTextField(
                     title = title,
-                    onTitleChange = onTitleChange
+                    onTitleChange = { newTitle ->
+                        title = newTitle
+                    }
                 )
                 Spacer(
                     modifier = Modifier.height(16.dp)
                 )
                 AuthorTextField(
                     author = author,
-                    onAuthorChange = onAuthorChange
+                    onAuthorChange = { newAuthor ->
+                        author = newAuthor
+                    }
                 )
             }
         },

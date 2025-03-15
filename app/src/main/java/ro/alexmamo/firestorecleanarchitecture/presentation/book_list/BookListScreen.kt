@@ -29,10 +29,6 @@ fun BookListScreen(
     val context = LocalContext.current
     var openAddBookDialog by remember { mutableStateOf(false) }
     val bookListResponse by viewModel.bookListState.collectAsStateWithLifecycle()
-    val titleToAdd by viewModel.titleToAdd.collectAsStateWithLifecycle()
-    val authorToAdd by viewModel.authorToAdd.collectAsStateWithLifecycle()
-    val titleToUpdate by viewModel.titleToUpdate.collectAsStateWithLifecycle()
-    val authorToUpdate by viewModel.authorToUpdate.collectAsStateWithLifecycle()
     val addBookResponse by viewModel.addBookState.collectAsStateWithLifecycle()
     val updateBookResponse by viewModel.updateBookState.collectAsStateWithLifecycle()
     val deleteBookResponse by viewModel.deleteBookState.collectAsStateWithLifecycle()
@@ -63,11 +59,6 @@ fun BookListScreen(
                     BookListContent(
                         innerPadding = innerPadding,
                         bookList = bookList,
-                        onEditBook = viewModel::setBookToUpdate,
-                        title = titleToUpdate,
-                        onTitleToUpdateChange = viewModel::onTitleToUpdateChange,
-                        author = authorToUpdate,
-                        onAuthorToUpdateChange = viewModel::onAuthorToUpdateChange,
                         onUpdateBook = viewModel::updateBook,
                         onInvalidBookField = { bookField ->
                             showToastMessage(context, "$bookField $invalidBookFieldMessage")
@@ -87,10 +78,6 @@ fun BookListScreen(
 
     if (openAddBookDialog) {
         AddBookAlertDialog(
-            title = titleToAdd,
-            onTitleChange = viewModel::onTitleChange,
-            author = authorToAdd,
-            onAuthorChange = viewModel::onAuthorChange,
             onAddBook = viewModel::addBook,
             onInvalidBookField = { bookField ->
                 showToastMessage(context, "$bookField $invalidBookFieldMessage")
@@ -106,12 +93,13 @@ fun BookListScreen(
         is Response.Loading -> LoadingIndicator()
         is Response.Success -> LaunchedEffect(Unit) {
             showToastMessage(context, "${BookAction.ADD} $bookActionMessage")
-            viewModel::resetAddBookState
+            viewModel.resetAddBookState()
         }
         is Response.Failure -> addBookResponse.e?.message?.let { errorMessage ->
             LaunchedEffect(errorMessage) {
                 logErrorMessage(errorMessage)
                 showToastMessage(context, errorMessage)
+                viewModel.resetAddBookState()
             }
         }
     }
@@ -121,12 +109,13 @@ fun BookListScreen(
         is Response.Loading -> LoadingIndicator()
         is Response.Success -> LaunchedEffect(Unit) {
             showToastMessage(context, "${BookAction.UPDATE} $bookActionMessage")
-            viewModel::resetUpdateBookState
+            viewModel.resetUpdateBookState()
         }
         is Response.Failure -> updateBookResponse.e?.message?.let { errorMessage ->
             LaunchedEffect(errorMessage) {
                 logErrorMessage(errorMessage)
                 showToastMessage(context, errorMessage)
+                viewModel.resetUpdateBookState()
             }
         }
     }
@@ -136,12 +125,13 @@ fun BookListScreen(
         is Response.Loading -> LoadingIndicator()
         is Response.Success -> LaunchedEffect(Unit) {
             showToastMessage(context, "${BookAction.DELETE} $bookActionMessage")
-            viewModel::resetDeleteBookState
+            viewModel.resetDeleteBookState()
         }
         is Response.Failure -> deleteBookResponse.e?.message?.let { errorMessage ->
             LaunchedEffect(errorMessage) {
                 logErrorMessage(errorMessage)
                 showToastMessage(context, errorMessage)
+                viewModel.resetDeleteBookState()
             }
         }
     }

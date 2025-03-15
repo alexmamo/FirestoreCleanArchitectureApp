@@ -1,5 +1,6 @@
 package ro.alexmamo.firestorecleanarchitecture.di
 
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import dagger.Module
@@ -15,7 +16,12 @@ const val BOOKS = "books"
 @InstallIn(SingletonComponent::class)
 object AppModule {
     @Provides
-    fun provideBookListRepository(): BookListRepository = BookListRepositoryImpl(
-        booksRef = Firebase.firestore.collection(BOOKS)
+    fun provideFirebaseFirestore() = Firebase.firestore
+
+    @Provides
+    fun provideBookListRepository(
+        db: FirebaseFirestore
+    ): BookListRepository = BookListRepositoryImpl(
+        booksRef = db.collection(BOOKS)
     )
 }
